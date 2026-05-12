@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - JES MINI MART</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+            <h1>JES MINI MART</h1>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('student_dashboard') }}" class="navbar-btn">🏠 Home</a>
+            <a href="{{ url_for('logout') }}" class="navbar-btn">🚪 Logout</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2>📦 My Orders</h2>
+        <p class="subtitle">Here are your past orders.</p>
+
+        <div class="orders">
+            <!-- Example Order Card -->
+            <div class="order-card">
+                <img src="{{ url_for('static', filename='images/book.png') }}" alt="Book">
+                <h3>Engineering Math Book</h3>
+                <p><strong>Price:</strong> ₹500</p>
+                <p><strong>Quantity:</strong> 1</p>
+                <p><strong>Date:</strong> 05/10/2025</p>
+                <p class="status delivered">✅ Delivered</p>
+            </div>
+
+            <div class="order-card">
+                <img src="{{ url_for('static', filename='images/calculator.png') }}" alt="Calculator">
+                <h3>Scientific Calculator</h3>
+                <p><strong>Price:</strong> ₹1200</p>
+                <p><strong>Quantity:</strong> 1</p>
+                <p><strong>Date:</strong> 04/10/2025</p>
+                <p class="status delivered">✅ Delivered</p>
+            </div>
+        </div>
+
+        <a href="{{ url_for('student_dashboard') }}" class="back-link">← Back to Dashboard</a>
+    </main>
+</body>
+</html>

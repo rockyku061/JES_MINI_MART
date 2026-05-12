@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - JES MINI MART</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+
+<body class="student-page">
+
+<header class="navbar">
+
+    <!-- Logo -->
+    <div class="logo-section">
+        <img src="{{ url_for('static', filename='logo.jpg') }}" class="logo">
+        <h1>JES MINI MART</h1>
+    </div>
+
+    <!-- Search -->
+    <form method="GET" action="{{ url_for('student_dashboard') }}" class="search-container">
+
+<input type="text" name="search" placeholder="Search products..." class="search">
+
+<button type="submit">🔍</button>
+
+</form>
+
+    <!-- Navigation Links -->
+    <div class="nav-links">
+        <a href="{{ url_for('contact_page') }}" class="navbar-btn">📞 Contact</a>
+        <a href="{{ url_for('feedback_page') }}" class="navbar-btn">💬 Feedback</a>
+        <a href="{{ url_for('logout') }}" class="navbar-btn">⏻ Logout</a>
+        <span class="user">👨‍🎓 {{ session.username }}</span>
+    </div>
+
+</header>
+<!-- Main container -->
+<div class="container">
+
+  <section class="main-section">
+    <h2>Welcome {{ session.username }}</h2>
+
+    <div class="dashboard-buttons">
+      <a href="{{ url_for('student_dashboard') }}" class="dash-btn">📦<br>All Products</a>
+      <a href="{{ url_for('cart_page') }}" class="dash-btn">🛒<br>My Cart</a>
+      <a href="{{ url_for('purchase_history_page') }}" class="dash-btn">📜<br>My Orders</a>
+      <a href="{{ url_for('add_product') }}" class="dash-btn add-btn">➕<br>Add Product</a>
+    </div>
+
+<!-- Product Grid -->
+<div class="products">
+
+  {% if products %}
+    {% for product in products %}
+
+    <div class="product-card">
+      <img src="{{ url_for('static', filename=product.image) }}" alt="Product Image" width="150">
+
+      <p><strong>{{ product.name }}</strong></p>
+      <p>₹ {{ product.price }}</p>
+
+      <!-- Description -->
+      <p style="font-size:13px; opacity:0.8; margin-bottom:8px;">
+        {{ product.description }}
+      </p>
+
+      <!-- Buttons -->
+      <div style="display:flex; flex-direction:column; gap:8px;">
+
+        <a href="{{ url_for('product_detail', product_id=product.id) }}">
+          <button type="button" class="btn">View Details</button>
+        </a>
+
+      </div>
+    </div>
+
+    {% endfor %}
+  {% else %}
+    <p>No products added yet.</p>
+  {% endif %}
+
+</div>
+  </section>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h3>My Favourite Links</h3>
+    <ul>
+      <li>🛒 <a href="{{ url_for('cart_page') }}">View Cart</a></li>
+      <li>📜 <a href="{{ url_for('purchase_history_page') }}">My Orders</a></li>
+      <li>⚙️ <a href="{{ url_for('profile_settings') }}">Profile Settings</a></li>
+      <li>❓ <a href="{{ url_for('faq_page') }}">FAQs</a></li>
+      <li>ℹ️ <a href="{{ url_for('about_page') }}">About the Team</a></li>
+    </ul>
+  </aside>
+
+</div>
+
+<footer class="main-footer">
+  <p>&copy; 2025 JES MINI MART. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

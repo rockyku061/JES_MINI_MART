@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback | JES MINI MART</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body class="student-page">
+
+<div class="feedback-overlay">
+    <div class="feedback-box">
+
+        <div class="close-btn">
+            <a href="{{ url_for('student_dashboard') }}">✖</a>
+        </div>
+
+        <h2>Your feedback is important to us</h2>
+        <p>How would you rate your experience?</p>
+
+        <form method="POST">
+
+            <div class="rating-container">
+                <input type="radio" name="rating" value="Very Poor" required> 😞
+                <input type="radio" name="rating" value="Poor"> 😕
+                <input type="radio" name="rating" value="Average"> 😐
+                <input type="radio" name="rating" value="Good"> 🙂
+                <input type="radio" name="rating" value="Excellent"> 😄
+            </div>
+
+            <textarea name="comment"
+                      placeholder="What did you enjoy the most about your experience?"
+                      required></textarea>
+
+            <button type="submit" class="submit-btn">Submit Feedback</button>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

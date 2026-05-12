@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ & How It Works - JES Student Mart</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+  <!-- Navbar -->
+<header class="navbar">
+
+  <div class="logo-section">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" class="logo">
+    <h1>JES MINI MART</h1>
+  </div>
+
+  <nav class="nav-links">
+    <a href="{{ url_for('student_dashboard') }}" class="navbar-btn">🏠 Home</a>
+    <a href="{{ url_for('logout') }}" class="navbar-btn">🚪 Logout</a>
+  </nav>
+
+</header>
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <section class="left-panel">
+      <div class="welcome-section">
+        <h2>❓ FAQ / How It Works</h2>
+        <p>Find answers to common questions and learn how JES Student Mart works.</p>
+      </div>
+
+      <!-- FAQ Section -->
+<div class="faq-container">
+  <h3>Frequently Asked Questions</h3>
+
+  <div class="faq-item">
+    <h4>🧑‍🎓 How do I log in as a student?</h4>
+    <p>Click <b>Login</b> on the home page, enter your Email, Registration Number, and Password, and you will be redirected to your dashboard.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>📦 How do I add a product?</h4>
+    <p>From the <b>Student Dashboard</b>, click <b>Add Product</b>. Fill in the product name, price, description, and upload an image.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>🛒 How do I add products to my cart?</h4>
+    <p>Browse products on the dashboard and click <b>Add to Cart</b>. The product will automatically be saved in your <b>My Cart</b> page.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>📜 Where can I see my past orders?</h4>
+    <p>Your previous purchases are listed in the <b>Purchase History</b> page.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>💬 How can I contact the seller?</h4>
+    <p>Open the product detail page and click <b>Chat with Seller</b> to discuss the product.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>❌ What does Sold Out mean?</h4>
+    <p>If a seller marks a product as <b>Sold Out</b>, the product will be removed from the dashboard and will no longer be available for purchase.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>⚙️ Can I update my profile?</h4>
+    <p>Yes, go to <b>Profile Settings</b> to change your details.</p>
+  </div>
+
+  <div class="faq-item">
+    <h4>❓ How do I log out?</h4>
+    <p>Click the <b>Logout</b> button in the top navigation bar.</p>
+  </div>
+
+</div>
+</section>
+</div>
+
+  
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome - JES MINI MART</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="welcome-page">
+  <div class="welcome-card">
+
+    <img src="{{ url_for('static', filename='logo.jpg') }}" 
+         alt="JES Mini Mart Logo" 
+         class="login-logo">
+
+    <h1>🎓 WELCOME TO JES MINI MART!</h1>
+    <p>Please login to continue.</p>
+
+    <!-- LOGIN BUTTON -->
+    <a href="{{ url_for('login') }}" class="role-btn">👨‍🎓 Login</a>
+
+    <p class="signup-link">
+      Don't have an account?
+      <a href="{{ url_for('register_page') }}">Create new account</a>
+    </p>
+
+  </div>
+</body>
+</html>

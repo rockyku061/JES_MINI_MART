@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat | JES STUDENT MART</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body class="student-page">
+
+<div class="chat-container">
+
+    <div class="chat-header">
+        Chat with Seller - {{ product_name }}
+    </div>
+
+    <div class="chat-messages">
+        {% for msg in messages %}
+            <div class="message {{ msg.type }}">
+                {{ msg.text }}
+            </div>
+        {% endfor %}
+    </div>
+
+    <form method="POST" class="chat-input">
+        <input type="text" name="message" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+    </form>
+
+</div>
+
+</body>
+</html>

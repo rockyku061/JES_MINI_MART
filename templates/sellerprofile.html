@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seller Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body class="student-page">
+
+<div class="container">
+    <h2>{{ seller }}'s Profile</h2>
+
+    <p><strong>Total Products:</strong> {{ products|length }}</p>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ url_for('static', filename=product.image) }}" width="120">
+            <p><strong>{{ product.name }}</strong></p>
+            <p>₹ {{ product.price }}</p>
+
+            {% if product.status == "Sold" %}
+                <span style="color:red;">SOLD</span>
+            {% else %}
+                <span style="color:green;">Available</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+</body>
+</html>

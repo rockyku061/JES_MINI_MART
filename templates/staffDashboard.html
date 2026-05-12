@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Dashboard - JES Student Mart</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+</head>
+<body class="staff-page">
+  <!-- Navbar -->
+<div class="navbar">
+  <div class="logo">📚 JES STUDENT MART</div>
+
+  <div class="search-container">
+    <input type="text" placeholder="Search products..." class="search">
+    <select class="category">
+      <option>All</option>
+      <option>Books</option>
+      <option>Dress</option>
+      <option>Accessories</option>
+    </select>
+  </div>
+
+<div class="nav-links">
+  <a href="{{ url_for('contact_page') }}" class="navbar-btn">📞 contact </a>
+  <a href="{{ url_for('feedback_page') }}" class="navbar-btn">💬 feesback</a>
+  <a href="{{ url_for('index') }}" class="navbar-btn">⏻ Logout </a>
+</div>
+
+  <div class="user">
+    👨 
+  </div>
+</div>
+
+
+  <!-- Main container -->
+  <div class="container">
+
+    <!-- Left Section -->
+    <section class="main-section">
+      <h2>Welcome Student</h2>
+      <p class="login-time">Last logged in: 16/09/25, 08:00 AM</p>
+
+      <!-- Action buttons -->
+<div class="quick-links">
+  <a href="{{ url_for('student_dashboard') }}" class="card"><span>📦</span> All Products</a>
+  <a href="{{ url_for('cart_page') }}" class="card"><span>🛒</span> My Cart</a>
+  <a href="{{ url_for('purchase_history_page') }}" class="card"><span>📜</span> Purchase History</a>
+  <a href="{{ url_for('add_product') }}" class="card"><span>➕</span> Add Product</a>
+</div>
+
+
+      <!-- Product Grid -->
+      <div class="products">
+  <div class="product-card">
+    <img src="static/images/calculator.png" alt="Calculator">
+    <p>Used Calculator FX-991ES</p>
+    <a href="{{ url_for('product_detail', product_id=0) }}" class="btn">View Detail</a>
+  </div>
+
+  <div class="product-card">
+    <img src="static/images/book.png" alt="Book">
+    <p>Engineering Math Book</p>
+    <a href="{{ url_for('product_detail', product_id=0) }}" class="btn">View Detail</a>
+  </div>
+
+
+  <div class="product-card">
+    <img src="static/images/notebook.png" alt="Notebook">
+    <p>Spiral Notebook</p>
+    <a href="{{ url_for('product_detail', product_id=0) }}" class="btn">View Detail</a>
+  </div>
+
+
+  <div class="product-card">
+    <img src="static/images/dress.png" alt="Dress">
+    <p>College Uniform Dress</p>
+    <a href="{{ url_for('product_detail', product_id=0) }}" class="btn">View Detail</a>
+  </div>
+
+
+  <div class="product-card">
+    <img src="static/images/drafter.png" alt="Drafter">
+    <p>Engineering Drafter</p>
+    <a href="{{ url_for('product_detail', product_id=0) }}" class="btn">View Detail</a>
+  </div>
+</div>
+    </section>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar">
+      <h3>My Favourite Links</h3>
+      <ul>
+        <li>
+          🛒 <a href="{{ url_for('cart_page') }}">View Cart</a>
+
+        </li>
+        <li>
+          📜 <a href="{{ url_for('my_orders') }}">My orders</a>
+        </li>
+        <li>
+          ⚙️ <a href="{{ url_for('profile_settings') }}">Profile Settings</a>
+       </li>
+        <li>
+          ❓<a href="{{ url_for('faq_page') }}">Faq </a>
+          </li>
+          <li>
+          ℹ️<a href="{{ url_for('about_page') }}">About the team</a>
+          </li>
+      </ul>
+    </aside>
+  </div>
+<footer class="main-footer">
+    <p>&copy; 2025 JES STUDENT MART. All rights reserved. | Website Made by [IT Student's]</p>
+</footer>
+</body>
+</html>
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - JES Student Mart Team</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+</head>
+<body class="about-page">
+  
+  <header class="navbar">
+
+  <!-- Logo -->
+  <div class="logo-section">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" class="logo">
+    <h1>JES MINI MART</h1>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-links">
+    <a href="{{ url_for('student_dashboard') }}" class="navbar-btn">🏠 Home</a>
+    <a href="{{ url_for('logout') }}" class="navbar-btn">🚪 Logout</a>
+  </div>
+
+</header>
+
+
+  <div class="container main-section">
+    <h2>🤝 About the Team</h2>
+    <p>JES MINI MART was developed by a team of five dedicated students as a project to create an efficient internal marketplace for the college community. Each member played a crucial role in bringing this application to life.</p>
+
+    <div class="team-grid">
+      
+      <div class="team-member-card">
+        <img src="{{ url_for('static', filename='images/dev_placeholder.png') }}" alt="Aman Kumar Bharati">
+        <h3>Aman Kumar Bharati</h3>
+        <p>Role: **Frontend Logic & Page Linking**</p>
+        <p>Contribution: Implemented **User Interface (UI) functional logic**, ensuring smooth navigation and **correct linking of all pages** within the Flask framework.</p>
+      </div>
+
+      <div class="team-member-card">
+        <img src="{{ url_for('static', filename='images/dev_placeholder.png') }}" alt="Banaja Priyadarshini Lenka">
+        <h3>Banaja Priyadarshini Lenka</h3>
+        <p>Role: **HTML Template Design & Structure**</p>
+        <p>Contribution: Created the fundamental **HTML template design** for core pages like the Dashboard and product forms, establishing the site's structure.</p>
+      </div>
+      
+      <div class="team-member-card">
+        <img src="{{ url_for('static', filename='images/dev_placeholder.png') }}" alt="Lalita Oram">
+        <h3>Lalita Oram</h3>
+        <p>Role: **CSS Styling & Visual Design**</p>
+        <p>Contribution: Managed all **CSS styles**, ensuring a clean, modern, and consistent visual aesthetic across the entire application.</p>
+      </div>
+
+      <div class="team-member-card">
+        <img src="{{ url_for('static', filename='images/dev_placeholder.png') }}" alt="Jayjeet Das">
+        <h3>Jayjeet Das</h3>
+        <p>Role: **Backend Development & Product Logic**</p>
+        <p>Contribution: Wrote the **Flask backend code**, implementing the logic for adding new products, and managing data flow between forms and the dashboard.</p>
+      </div>
+      
+      <div class="team-member-card">
+        <img src="{{ url_for('static', filename='images/dev_placeholder.png') }}" alt="Sandeep Kewat">
+        <h3>Sandeep Kewat</h3>
+        <p>Role: **Quality Assurance (QA) & System Integration**</p>
+        <p>Contribution: Conducted **comprehensive testing** of all features, links, and user paths, ensuring a stable and integrated system.</p>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

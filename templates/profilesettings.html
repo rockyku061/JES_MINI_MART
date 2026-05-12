@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Settings - JES Student Mart</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+<header class="navbar">
+
+  <div class="logo-section">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" class="logo">
+    <h1>JES MINI MART</h1>
+  </div>
+
+  <nav class="nav-links">
+    <a href="{{ url_for('student_dashboard') }}" class="navbar-btn">🏠 Home</a>
+    <a href="{{ url_for('purchase_history_page') }}" class="navbar-btn">📜 Purchase History</a>
+    <a href="{{ url_for('logout') }}" class="navbar-btn">🚪 Logout</a>
+  </nav>
+
+</header>
+
+<div class="profile-container">
+  
+</div>
+
+  <form method="POST">
+
+    <label>Full Name</label>
+    <input type="text" name="username" value="{{ user.username }}">
+
+    <label>Email</label>
+    <input type="email" name="email" value="{{ user.email }}">
+
+    <label>Password</label>
+    <input type="password" name="password" value="{{ user.password }}">
+
+    <label>Contact Number</label>
+    <input type="text" name="phone">
+
+    <label>Address</label>
+    <textarea name="address"></textarea>
+
+    <button type="submit">Save Changes</button>
+
+  </form>
+
+</div>
+
+    <a href="
+  {% if user.role == 'staff' %}
+    {{ url_for('staff_dashboard') }}
+  {% else %}
+    {{ url_for('student_dashboard') }}
+  {% endif %}
+" class="back-link">← Back to Dashboard</a>
+  </div>
+
+  </div>
+</body>
+</html>

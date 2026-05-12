@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cart - JES MINI MART</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+  
+
+  <!-- Main Content -->
+  <div class="main-container">
+    <section class="left-panel">
+      <div class="welcome-section">
+        <h2>🛒 My Cart</h2>
+        <p>Here are the products you have added to your cart.</p>
+      </div>
+
+      <!-- Static Cart Items -->
+      <section class="products">
+        <h3>Cart Items</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <img src="https://via.placeholder.com/100" alt="Book">
+            <p><strong>Engineering Book</strong></p>
+            <p>Price: ₹500</p>
+            <button>Remove</button>
+            
+          </div>
+
+          <div class="product-card">
+            <img src="https://via.placeholder.com/100" alt="Calculator">
+            <p><strong>Scientific Calculator</strong></p>
+            <p>Price: ₹1200</p>
+            <button>Remove</button>
+          </div>
+        </div>
+      </section>
+      
+{% for item in cart_items %}
+    <div class="cart-item">
+        ...
+
+        <form method="POST" action="/remove_from_cart">
+            <input type="hidden" name="item_id" value="{{ item.id }}">
+            <button type="submit" class="remove-btn">Remove</button>
+        </form>
+    </div>
+{% endfor %}
+      <!-- Checkout Button -->
+      <div style="margin: 20px 0;">
+        <button style="padding: 12px 20px; font-size: 16px; background:#0052cc; color:white; border:none; border-radius:8px; cursor:pointer;">
+          ✅ Proceed to Checkout
+        </button>
+      </div>
+    </section>
+  </div>
+
+  
+</body>
+</html>

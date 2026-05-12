@@ -1,0 +1,1603 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #002855;
+  color: #fff;
+
+  cursor: url("cursor.png"), auto;   /* 👈 YE LINE ADD KARO */
+}
+
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #002855, #004aad);
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin: 0 2rem;
+  gap: 0.0rem;
+}
+
+.search {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
+  border: none;
+  outline: none;
+}
+
+.category {
+  padding: 0.6rem;
+  border-radius: 999px;
+  border: none;
+  margin: 0 2rem;
+  gap: 0.5rem;
+}
+
+.user {
+  font-weight: bold;
+}
+
+/* Layout */
+.container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* Main */
+.main-content {
+  flex: 3;
+}
+
+.last-login {
+  font-size: 0.9rem;
+  color: #bbb;
+  margin-bottom: 15px;  /* 👈 Add this line */
+}
+
+
+/* === C. Menu Buttons === */
+.menu-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+.menu-buttons a {
+  background: white;
+  color: #002855;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.menu-buttons a:hover {
+  background: #004aad;
+  color: white;
+}
+/*product */
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 in a row */
+  gap: 6.5rem;
+  margin-top: 4.5rem;
+}
+
+.product-card {
+  background: white;
+  color: black;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* Rectangle shape */
+  height: 170px;          /* kam height */
+  width: 130%;            /* auto adjust in grid */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.product-card img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 60px;
+
+}
+
+.product-card p {
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.product-card button {
+  margin-top: auto;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 20px;
+  background: #004aad;   /* blue button */
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.product-card button:hover {
+  background: #0066ff;
+}
+
+
+/* Sidebar */
+.container {
+  display: flex;
+  justify-content: space-between; /* left main + right sidebar */
+  align-items: flex-start;        /* dono top pe align ho jayenge */
+  gap: 2rem;
+  padding: 4rem;
+}
+
+.sidebar {
+  flex: 0 0 290px;   /* width fix */
+  min-height: 50vh;     /* optional: agar ek limit dena ho */
+  background: white;
+  color: black;
+  border-radius: 25px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.sidebar h3 {
+  margin-bottom: 1rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 1rem 0;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* Layout */
+.main-container {
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Left Panel */
+.left-panel {
+  flex: 3;
+}
+
+.welcome h2 {
+  color: #fdfeff;
+  margin-bottom: 0.3rem;
+}
+
+.welcome p {
+  color: rgb(255, 255, 255);
+  margin-bottom: 1.5rem;
+}
+
+/* Quick Links */
+.quick-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  flex: 1;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #0052cc, #003d99);
+  color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+/* Products */
+.products h3 {
+  margin-bottom: 1rem;
+  color: #002855;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.product-card p {
+  margin-bottom: 0.8rem;
+  font-weight: 500;
+}
+
+.product-card button {
+  background: #004aad;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.product-card button:hover {
+  background: #002855;
+}
+
+/* Right Panel */
+.right-panel {
+  flex: 1;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.right-panel h3 {
+  margin-bottom: 1rem;
+  color: #002855;
+}
+
+.right-panel ul {
+  list-style: none;
+}
+
+.right-panel li {
+  padding: 0.8rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.right-panel li:hover {
+  background: #f0f7ff;
+}
+/*ya add product ka style hai */
+.form-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.form-container h2 {
+  margin-bottom: 1rem;
+  color: #002855;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form input, form textarea {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+form button {
+  background: #004aad;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+form button:hover {
+  background: #002855;
+}
+/* ---------------- LOGIN PAGE STYLES ---------------- */
+
+body.login-page{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  background:#0b2f5b;
+  font-family:Segoe UI, sans-serif;
+}
+
+/* Login Card */
+
+.login-box{
+  background:#ffffff;
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  text-align:center;
+  width:400px;
+}
+
+/* Logo */
+
+.login-box img{
+  width:70px;
+  margin-bottom:10px;
+}
+
+/* Heading */
+
+.login-box h2{
+  color:#000000;
+  font-size:28px;
+  font-weight:700;
+  margin:10px 0 15px 0;
+}
+
+/* Form layout */
+
+form{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* Input fields */
+
+form input{
+  padding:10px 14px;
+  border:1px solid #ccc;
+  border-radius:25px;
+  font-size:14px;
+  outline:none;
+}
+
+/* Button */
+
+form button{
+  background:#2f5fe3;
+  color:white;
+  border:none;
+  padding:14px;
+  border-radius:40px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+
+form button:hover{
+  background:#002855;
+}
+
+
+/* Back link */
+.back-btn{
+  margin-top:10px;
+  background:none;
+  border:none;
+  color:#444;
+  cursor:pointer;
+}
+
+
+/* Welcome Section */
+.welcome-section {
+  background: linear-gradient(135deg, #0a3d91, #0052cc);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.welcome-section h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.welcome-section p {
+  margin: 5px 0 0;
+  font-size: 14px;
+}
+
+/* Buttons */
+.button-container {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.button-container button {
+  background: #0052cc;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.button-container button:hover {
+  background: #003d99;
+}
+
+/* Favourite Links */
+.favourite-links {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ===== Welcome Page Styles ===== */
+
+body.welcome-page{
+  font-family:'Poppins',sans-serif;
+  background:#002855;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+/* Logo */
+
+img{
+  max-width:110px;
+  height:auto;
+  display:block;
+  margin:0 auto 15px auto;
+}
+
+/* Card */
+
+.welcome-card{
+  background:white;
+  padding:3rem 2.5rem;
+  border-radius:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  text-align:center;
+  max-width:480px;
+  width:100%;
+  animation:fadeIn 0.6s ease;
+}
+
+/* Heading */
+
+.welcome-card h1{
+  font-size:26px;
+  margin-bottom:10px;
+  font-weight:700;
+  color:#002855;
+  white-space:nowrap;
+}
+
+/* subtitle */
+
+.welcome-card p{
+  margin-bottom:25px;
+  color:#000;
+  font-size:14px;
+}
+
+/* Login Button */
+
+.role-btn{
+  display:block;
+  width:85%;
+  background:#004aad;
+  color:#ffffff !important;
+  padding:14px;
+  border:none;
+  border-radius:50px;
+  font-size:16px;
+  font-weight:700;
+  margin:12px auto;
+  cursor:pointer;
+  text-decoration:none;
+  transition:0.3s;
+  text-align:center;
+}
+
+.role-btn:hover{
+  background:#002f6c;
+  transform:translateY(-2px);
+}
+
+/* Register Link */
+
+.welcome-card a{
+  color:#004aad;
+  font-weight:600;
+  text-decoration:none;
+}
+
+/* Animation */
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+/* Product Cards */
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card button.btn {
+  background: #004aad;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.product-card button.btn:hover {
+  background: #002f6c;
+}
+
+/* Sidebar */
+.right-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.side-panel a{
+    text-decoration: none;
+}
+.sidebar a{
+    text-decoration: none;
+    color: #002855;
+}
+/* Background fix */
+body.student-page {
+  background: linear-gradient(135deg, #002855, #002855);
+  color: #fff;
+}
+
+/* Welcome text */
+.welcome h2 {
+  color: #fff;
+  font-weight: bold;
+}
+
+.welcome p {
+  color: #d1d1d1;
+}
+
+/* Quick links buttons */
+.quick-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.quick-links .card {
+  flex: unset;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  color: #002855;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.quick-links .card:hover {
+  transform: translateY(-4px);
+  background: #f4f6fb;
+}
+
+/* Product grid */
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-align: center;
+  transition: transform 0.2s;
+  color: #002855;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card button {
+  background: #004aad;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.product-card button:hover {
+  background: #002855;
+}
+
+/* Right Panel Sidebar */
+.right-panel {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  color: #002855;
+}
+
+.right-panel ul li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  color: #004aad;
+  font-weight: 500;
+}
+
+.right-panel ul li:hover {
+  background: #f0f7ff;
+}
+
+
+/* ========================= */
+/* CONTACT PAGE (Segoe UI)   */
+/* ========================= */
+
+body.contact-page {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: #002855;   /* same as dashboard background */
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px;
+  border-radius: 15px;
+
+  width: 100%;
+  max-width: 650px;     /* smaller card */
+
+  margin: auto;         /* center horizontally */
+
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.contact-container h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.contact-container .subtitle {
+  color: #cfd8dc;
+  margin-bottom: 30px;
+}
+
+.contact-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.contact-card {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  width: 230px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.3);
+  transition: 0.3s ease;
+}
+
+.contact-card .icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.contact-card h3 {
+  margin-bottom: 5px;
+}
+
+.contact-card p {
+  font-size: 14px;
+  color: #cfd8dc;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.5);
+}
+
+/* Specific colors for each type */
+.gmail:hover {
+  background: #d44638;
+}
+
+.phone:hover {
+  background: #007bff;
+}
+
+.whatsapp:hover {
+  background: #25D366;
+}
+
+.back {
+  margin-top: 25px;
+}
+
+.back a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back a:hover {
+  text-decoration: underline;
+}
+
+/* MAIN PAGE */
+.olx-container{
+    width:90%;
+    max-width:900px;
+    margin:50px auto;
+}
+
+
+/* CARD */
+.olx-card{
+    background:white;
+    border-radius:16px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 12px 35px rgba(0,0,0,0.2);
+}
+
+
+/* IMAGE */
+.olx-image img{
+    width:280px;
+    border-radius:12px;
+    margin-bottom:20px;
+}
+
+
+/* PRODUCT NAME */
+.olx-details h2{
+    font-size:30px;
+    color:#002855;
+    margin-bottom:10px;
+}
+
+
+/* PRICE */
+.price{
+    font-size:28px;
+    font-weight:bold;
+    color:#004aad;
+    margin-bottom:15px;
+}
+
+
+/* DESCRIPTION */
+.desc{
+    color:#555;
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+
+/* SELLER BOX */
+.seller-box{
+    background:#f4f7fb;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:25px;
+}
+
+
+/* BUTTON AREA */
+.action-buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+
+/* CART BUTTON */
+.cart-btn{
+    background:#004aad;
+    color:white;
+    border:none;
+    padding:12px 28px;
+    border-radius:30px;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.cart-btn:hover{
+    background:#003080;
+}
+
+
+/* CHAT BUTTON */
+.chat-btn{
+    background:#00a884;
+    color:white;
+    border:none;
+    padding:12px 28px;
+    border-radius:30px;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.chat-btn:hover{
+    background:#008f73;
+}
+
+
+/* REVIEWS */
+.review-section{
+    margin-top:30px;
+    color:white;
+}
+ 
+
+
+/* ================= FEEDBACK MODAL ================= */
+
+.feedback-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 47, 52, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feedback-box {
+    background: white;
+    width: 450px;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+.close-btn a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #333;
+}
+
+.rating-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    font-size: 28px;
+}
+
+.rating-container input {
+    margin-right: 5px;
+}
+
+textarea {
+    width: 100%;
+    height: 90px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+}
+
+.submit-btn {
+    background: #002f34;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #00a49f;
+}
+
+/* ===== NAVBAR STYLE ===== */
+
+.navbar{
+  background:linear-gradient(90deg,#004aad,#002855);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 22px;   /* thinner navbar */
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+.navbar a{
+    text-decoration: none !important;
+}
+/* Logo section */
+.logo-section{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.logo-section h1{
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+/* smaller college logo */
+.logo{
+    height:45px;
+    width:auto;
+}
+
+.logo-section{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* SEARCH AREA */
+.search-container{
+    position:relative;
+}
+
+.search{
+    padding:8px 35px 8px 15px;
+}
+
+.search-container button{
+    position:absolute;
+    background:transparent !important;
+    right:138px;
+}
+
+/* right side links */
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* curved navbar buttons */
+.navbar-btn{
+  background:white;
+  color:#002855;
+  border:none;
+  padding:6px 16px;
+  border-radius:50px;
+  font-weight:500;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:0.3s;
+}
+
+.navbar-btn:hover{
+  background:#e6e6e6;
+  transform:scale(1.05);
+}
+
+
+/* PURCHASE HISTORY PAGE */
+
+.orders{
+    width:90%;
+    max-width:1100px;
+    margin:40px auto;
+}
+
+/* ORDER CARD */
+
+.order-card{
+    display:flex;
+    justify-content:space-between;
+    background:white;
+    border-radius:14px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* LEFT SIDE ORDER DETAILS */
+
+.order-info{
+    width:65%;
+}
+
+.order-info h3{
+    font-size:22px;
+    margin-bottom:10px;
+    color:#002855;
+}
+
+.order-info p{
+    margin:6px 0;
+    font-size:15px;
+}
+
+/* PRICE */
+
+.order-price{
+    font-weight:600;
+    color:#004aad;
+}
+
+/* RIGHT STATUS PANEL */
+
+.order-status{
+    width:30%;
+    background:#f4f6fb;
+    border-radius:10px;
+    padding:15px;
+}
+
+.order-status h4{
+    margin-bottom:10px;
+}
+
+/* STATUS LIST */
+
+.order-status ul{
+    list-style:none;
+    padding:0;
+}
+
+.order-status li{
+    padding:6px 0;
+    color:#888;
+}
+.order-status li.active{
+    color:#2ecc71;
+    font-weight:600;
+}
+
+/* --- Global Font Change to Segoe UI (Apply this globally if you like the font) --- */
+body, h1, h2, h3, p, a, button {
+    /* Set Segoe UI as the primary font, with fallback to other clean sans-serif fonts */
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- About Us / Team Page Styles (Updated for Clean UI) --- */
+
+/* The main container for all team member cards */
+.team-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* Increased gap for better spacing */
+    justify-content: center;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+/* Styling for each individual team member card (Clean, light design) */
+.team-member-card {
+    background: #ffffff; /* White or very light background for a clean look */
+    color: #666666; /* Darker text color for better readability on light background */
+    border-radius: 8px; /* Slightly smoother corners */
+    padding: 25px;
+    width: 260px;
+    /* Use a subtle, light box-shadow for a soft elevation effect (Segoe UI style) */
+    box-shadow: 0 2px 5px rgba(252, 248, 248, 0.1); 
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #e0e0e0; /* Add a very light border for definition */
+}
+
+/* Hover effect */
+.team-member-card:hover {
+    transform: translateY(-4px); /* Lift the card slightly */
+    box-shadow: 0 8px 15px rgba(255, 253, 253, 0.15); /* Slightly stronger shadow on hover */
+}
+
+/* Styling for the developer image inside the card */
+.team-member-card img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    background: #f0f0f0; /* Light background for the image area */
+    object-fit: cover;
+    border: 4px solid #0078d4; /* A professional blue border (Microsoft/Segoe UI Blue) */
+}
+
+/* Styling for the developer's name */
+.team-member-card h3 {
+    color: #0078d4; /* Use the professional blue for the name */
+    margin-bottom: 5px;
+    font-size: 1.4em;
+    font-weight: 600; /* Slightly bolder font weight for names */
+}
+
+/* Styling for the role and contribution text */
+.team-member-card p {
+    font-size: 0.9em;
+    margin: 8px 0;
+    line-height: 1.5;
+    color: #0a0808;
+}
+
+/* ===== DASHBOARD MAIN BUTTONS ===== */
+
+.dashboard-buttons{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.dash-btn{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 20px 10px;
+    border-radius: 18px;
+    font-size: 18px;
+    font-weight: 600;
+    
+    background: linear-gradient(180deg,#ffffff,#ffffff);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.3),
+                0 6px 15px rgba(0,0,0,0.25);
+
+    transition: 0.3s;
+}
+
+.dash-btn:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+.add-btn{
+    grid-column: span 3;
+    padding: 20px;
+}
+
+/* ===== REGISTER FORM ===== */
+
+.register-form{
+    margin-top:20px;
+}
+
+.register-form input{
+    width:100%;
+    padding:14px;
+    margin:10px 0;
+    border-radius:25px;
+    border:1px solid #ddd;
+    font-size:16px;
+    background:#f5f7fb;
+}
+.register-form input{
+    width:100%;
+    padding:8px;
+    margin:2px 0;
+}
+.register-form input:focus{
+    outline:none;
+    border:1px solid #1E5EFF;
+}
+
+/* register button */
+
+.register-form .role-btn{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    border:none;
+    border-radius:30px;
+    background:#1E5EFF;
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* REGISTER PAGE CARD */
+
+.register-container{
+    width:400px;
+    margin:40px auto;
+    background:white;
+    padding:30px 30px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.2);
+    text-align:center;
+}
+
+.register-logo{
+    width:90px;
+    display:block;
+    margin:0 auto 20px auto;
+}
+
+.register-container h2{
+    color:#1F2933;
+}
+
+.register-form .role-btn:hover{
+    background:#1748C7;
+}
+
+/* back link */
+
+.back-link{
+    display:block;
+    margin-top:18px;
+    text-align:center;
+    color:#020202;
+    text-decoration:none;
+}
+
+.back-link:hover{
+    color:#1E5EFF;
+}
+
+
+/* ===== PRODUCT DETAIL PAGE ===== */
+
+.olx-container{
+    width:90%;
+    max-width:1100px;
+    margin:40px auto;
+}
+
+/* Main Card */
+.olx-card{
+    display:flex;
+    gap:40px;
+    background:#ffffff;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Product Image */
+.olx-image{
+    flex:1;
+}
+
+.olx-image img{
+    width:100%;
+    max-width:400px;
+    border-radius:12px;
+}
+
+/* Product Details */
+.olx-details{
+    flex:1;
+}
+
+.olx-details h2{
+    font-size:28px;
+    color:#002f34;
+    margin-bottom:10px;
+}
+
+.price{
+    font-size:30px;
+    font-weight:bold;
+    margin:15px 0;
+    color:#004aad;
+}
+
+.desc{
+    color:#555;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+/* Seller Info Box */
+.seller-box{
+    background:#195a7a;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+/* Buttons */
+.action-buttons{
+    display:flex;
+    gap:15px;
+}
+
+.cart-btn,
+.chat-btn{
+    padding:12px 22px;
+    border:none;
+    border-radius:8px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.cart-btn{
+    background:#004aad;
+    color:white;
+}
+
+.chat-btn{
+    background:#00a49f;
+    color:white;
+}
+
+.cart-btn:hover,
+.chat-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* Review Section */
+.review-section{
+    margin-top:30px;
+    background:#ffffff;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+
+.sold-btn{
+    background:#e74c3c;
+    color:white;
+    border:none;
+    padding:12px 28px;
+    border-radius:30px;
+    font-size:15px;
+    cursor:pointer;
+}
+
+.sold-btn:hover{
+    background:#c0392b;
+}
+
+.review-section h3{
+    color:#002855;
+}
+
+/* ================= CHAT PAGE ================= */
+
+.chat-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+}
+
+.chat-header {
+    background: #002f34;
+    color: white;
+    padding: 15px 20px;
+    font-weight: bold;
+    border-radius: 12px 12px 0 0;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #f4f6f7;
+}
+
+.message {
+    margin-bottom: 15px;
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.sent {
+    background: #00a49f;
+    color: white;
+    align-self: flex-end;
+}
+
+.received {
+    background: #e0e0e0;
+    align-self: flex-start;
+}
+
+.chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    padding: 10px 18px;
+    background: #002f34;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+/* ===== PROFILE CARD ===== */
+
+.profile-card{
+width:420px;
+margin:80px auto;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+text-align:center;
+}
+
+.profile-logo{
+width:70px;
+margin-bottom:10px;
+}
+
+.profile-card h2{
+color:#002855;
+margin-bottom:20px;
+}
+
+.profile-card form{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.profile-card label{
+text-align:left;
+font-size:14px;
+color:#333;
+}
+
+.profile-card input,
+.profile-card textarea{
+padding:12px;
+border-radius:25px;
+border:1px solid #ccc;
+}
+
+.profile-card textarea{
+border-radius:12px;
+height:90px;
+}
+
+.profile-card button{
+background:#2f5fe3;
+color:white;
+border:none;
+padding:14px;
+border-radius:40px;
+font-weight:600;
+cursor:pointer;
+}
+
+.profile-card button:hover{
+background:#002855;
+}
+
+.back-link{
+display:block;
+margin-top:15px;
+text-decoration:none;
+color:#000;
+}

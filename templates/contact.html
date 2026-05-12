@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us | JES Student Mart</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+  <div class="contact-container">
+    <h1>📞 Contact</h1>
+    <p class="subtitle">We’re here to help you! Choose any option below to reach out.</p>
+
+    <div class="contact-cards">
+      <!-- Gmail -->
+      <a href="mailto:jesmart.support@gmail.com" class="contact-card gmail">
+        <div class="icon">📧</div>
+        <h3>Email Us</h3>
+        <p>jesmart.support@gmail.com</p>
+      </a>
+
+      <!-- Phone -->
+      <a href="tel:+919999999999" class="contact-card phone">
+        <div class="icon">📞</div>
+        <h3>Call Us</h3>
+        <p>+91 99999 99999</p>
+      </a>
+
+      <!-- WhatsApp -->
+      <a href="https://wa.me/919999999999" target="_blank" class="contact-card whatsapp">
+        <div class="icon">💬</div>
+        <h3>WhatsApp</h3>
+        <p>Chat with our support</p>
+      </a>
+    </div>
+
+    <p class="back"><a href="{{ url_for('student_dashboard') }}">🏠 Back to Home</a>
+  </div>
+</body>
+</html>

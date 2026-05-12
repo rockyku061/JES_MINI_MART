@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product.name }} | JES STUDENT MART</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+
+<body class="student-page">
+  
+   
+<!-- Navbar -->
+<div class="navbar">
+  <div class="logo">JES MINI MART</div>
+  <a href="{{ url_for('student_dashboard') }}" class="navbar-btn">🏠 Back to Dashboard</a>
+</div>
+
+<!-- OLX Style Product Detail -->
+<div class="olx-container">
+
+  <div class="olx-card">
+
+    <!-- Left Image -->
+    <div class="olx-image">
+      <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+    </div>
+
+    <!-- Right Details -->
+    <div class="olx-details">
+
+      <h2>{{ product.name }}</h2>
+
+      <h3 class="price">₹ {{ product.price }}</h3>
+
+      <p class="desc">
+        {{ product.description }}
+      </p>
+
+      <div class="seller-box">
+       <p><strong>Seller:</strong> {{ product.seller }}</p>
+        <p><strong>Location:</strong> College Campus</p>
+        <p class="views">👁 {{ product[6] }} views</p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="action-buttons">
+
+        <form method="POST" action="{{ url_for('cart_page') }}">
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+          <button type="submit" class="cart-btn">🛒 Add to Cart</button>
+        </form>
+
+       <a href="{{ url_for('chat_page', product_name=product.name) }}">
+    <button class="chat-btn">💬 Chat with Seller</button>
+</a>
+{% if session['username'] == product.seller %}
+<form method="POST" action="{{ url_for('mark_sold', product_id=product.id) }}">
+<button class="sold-btn">❌ Sold Out</button>
+</form>
+{% endif %}
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="review-section">
+    <h3>Customer Reviews</h3>
+    <a href="{{ url_for('feedback_page') }}" class="navbar-btn">💬 Feedback</a>
+  </div>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+
+<div class="register-container">
+
+<img src="/static/logo.jpg" class="register-logo">
+
+<h2>Create Account</h2>
+
+<form class="register-form" method="POST">
+
+<input type="text" name="name" placeholder="Name">
+
+<input type="text" name="regdno" placeholder="Regd No">
+
+<input type="email" name="email" placeholder="Email">
+
+<input type="password" name="password" placeholder="Password">
+
+<button class="role-btn">Register</button>
+
+</form>
+
+<a href="/login" class="back-link">Already have account? Login</a>
+
+</div>
+
+</body>
+</html>

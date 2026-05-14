@@ -311,28 +311,7 @@ def chat_page(seller, product_name):
 
     current_user = session["username"]
 
-    # SEND MESSAGE
-    if request.method == "POST":
-
-        message = request.form["message"]
-
-        with open("messages.csv",
-                  "a",
-                  newline="",
-                  encoding="utf-8") as f:
-
-            writer = csv.writer(f)
-
-            writer.writerow([
-                current_user,
-                seller,
-                product_name,
-                message
-            ])
-
-    messages = []
-
-    # CREATE FILE IF NOT EXISTS
+    # CREATE FILE FIRST
     if not os.path.exists("messages.csv"):
 
         with open("messages.csv",
@@ -349,6 +328,37 @@ def chat_page(seller, product_name):
                 "message"
             ])
 
+    # SEND MESSAGE
+    if request.method == "POST":
+
+        message = request.form["message"].strip()
+
+        if message != "":
+
+            with open("messages.csv",
+                      "a",
+                      newline="",
+                      encoding="utf-8") as f:
+
+                writer = csv.writer(f)
+
+                writer.writerow([
+                    current_user,
+                    seller,
+                    product_name,
+                    message
+                ])
+
+        return redirect(
+            url_for(
+                "chat_page",
+                seller=seller,
+                product_name=product_name
+            )
+        )
+
+    messages = []
+
     # LOAD CHAT
     with open("messages.csv",
               "r",
@@ -359,11 +369,14 @@ def chat_page(seller, product_name):
         for row in reader:
 
             if (
-                row["seller"] == seller and
-                row["product"] == product_name
+                row.get("seller") == seller and
+                row.get("product") == product_name
             ):
 
-                messages.append(row)
+                messages.append({
+                    "sender": row.get("sender", ""),
+                    "message": row.get("message", "")
+                })
 
     return render_template(
         "chat.html",

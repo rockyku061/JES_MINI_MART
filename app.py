@@ -331,23 +331,33 @@ def chat_page(seller, product_name):
     # SEND MESSAGE
     if request.method == "POST":
 
-        message = request.form["message"].strip()
+     message = request.form["message"].strip()
 
-        if message != "":
+    if message != "":
 
-            with open("messages.csv",
-                      "a",
-                      newline="",
-                      encoding="utf-8") as f:
+        with open(
+            "messages.csv",
+            "a",
+            newline="",
+            encoding="utf-8"
+        ) as f:
 
-                writer = csv.writer(f)
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "sender",
+                    "seller",
+                    "product",
+                    "message"
+                ]
+            )
 
-                writer.writerow([
-                    current_user,
-                    seller,
-                    product_name,
-                    message
-                ])
+            writer.writerow({
+                "sender": current_user,
+                "seller": seller,
+                "product": product_name,
+                "message": message
+            })
 
         return redirect(
             url_for(

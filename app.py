@@ -311,13 +311,15 @@ def chat_page(seller, product_name):
 
     current_user = session["username"]
 
-    # CREATE FILE FIRST
+    # CREATE FILE
     if not os.path.exists("messages.csv"):
 
-        with open("messages.csv",
-                  "w",
-                  newline="",
-                  encoding="utf-8") as f:
+        with open(
+            "messages.csv",
+            "w",
+            newline="",
+            encoding="utf-8"
+        ) as f:
 
             writer = csv.writer(f)
 
@@ -331,33 +333,36 @@ def chat_page(seller, product_name):
     # SEND MESSAGE
     if request.method == "POST":
 
-     message = request.form["message"].strip()
+        message = request.form.get(
+            "message",
+            ""
+        ).strip()
 
-    if message != "":
+        if message != "":
 
-        with open(
-            "messages.csv",
-            "a",
-            newline="",
-            encoding="utf-8"
-        ) as f:
+            with open(
+                "messages.csv",
+                "a",
+                newline="",
+                encoding="utf-8"
+            ) as f:
 
-            writer = csv.DictWriter(
-                f,
-                fieldnames=[
-                    "sender",
-                    "seller",
-                    "product",
-                    "message"
-                ]
-            )
+                writer = csv.DictWriter(
+                    f,
+                    fieldnames=[
+                        "sender",
+                        "seller",
+                        "product",
+                        "message"
+                    ]
+                )
 
-            writer.writerow({
-                "sender": current_user,
-                "seller": seller,
-                "product": product_name,
-                "message": message
-            })
+                writer.writerow({
+                    "sender": current_user,
+                    "seller": seller,
+                    "product": product_name,
+                    "message": message
+                })
 
         return redirect(
             url_for(
@@ -369,23 +374,25 @@ def chat_page(seller, product_name):
 
     messages = []
 
-    # LOAD CHAT
-    with open("messages.csv",
-              "r",
-              encoding="utf-8") as f:
+    # LOAD MESSAGES
+    with open(
+        "messages.csv",
+        "r",
+        encoding="utf-8"
+    ) as f:
 
         reader = csv.DictReader(f)
 
         for row in reader:
 
             if (
-                row.get("seller") == seller and
-                row.get("product") == product_name
+                row["seller"] == seller and
+                row["product"] == product_name
             ):
 
                 messages.append({
-                    "sender": row.get("sender", ""),
-                    "message": row.get("message", "")
+                    "sender": row["sender"],
+                    "message": row["message"]
                 })
 
     return render_template(

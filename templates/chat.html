@@ -1,28 +1,143 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Chat | JES STUDENT MART</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+    <title>Chat | JES MINI MART</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='dashboard.css') }}">
+
+    <style>
+
+        .chat-container{
+            width:60%;
+            margin:auto;
+            margin-top:30px;
+            background:white;
+            border-radius:12px;
+            overflow:hidden;
+        }
+
+        .chat-header{
+            background:#003b46;
+            color:white;
+            padding:20px;
+            font-size:24px;
+            font-weight:bold;
+        }
+
+        .chat-messages{
+            height:500px;
+            overflow-y:auto;
+            background:#f1f1f1;
+            padding:20px;
+        }
+
+        .message{
+            padding:12px;
+            margin-bottom:12px;
+            border-radius:10px;
+            width:fit-content;
+            max-width:70%;
+            font-size:16px;
+        }
+
+        .mine{
+            background:#0d6efd;
+            color:white;
+            margin-left:auto;
+        }
+
+        .other{
+            background:white;
+            border:1px solid #ccc;
+        }
+
+        .chat-input{
+            padding:15px;
+            background:white;
+        }
+
+        .chat-input input{
+            width:100%;
+            padding:14px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            margin-bottom:10px;
+        }
+
+        .chat-input button{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:8px;
+            background:#003b46;
+            color:white;
+            font-size:16px;
+        }
+
+    </style>
+
 </head>
+
 <body class="student-page">
 
 <div class="chat-container">
 
     <div class="chat-header">
+
         Chat with Seller - {{ product_name }}
+
     </div>
 
     <div class="chat-messages">
+
         {% for msg in messages %}
-            <div class="message {{ msg.type }}">
-                {{ msg.text }}
-            </div>
+
+            {% if msg['sender'] == current_user %}
+
+                <div class="message mine">
+
+                    {{ msg['message'] }}
+
+                </div>
+
+            {% else %}
+
+                <div class="message other">
+
+                    <strong>
+                        {{ msg['sender'] }}
+                    </strong>
+
+                    <br><br>
+
+                    {{ msg['message'] }}
+
+                </div>
+
+            {% endif %}
+
         {% endfor %}
+
     </div>
 
-    <form method="POST" class="chat-input">
-        <input type="text" name="message" placeholder="Type your message..." required>
-        <button type="submit">Send</button>
+    <form method="POST"
+          class="chat-input">
+
+        <input type="text"
+               name="message"
+               placeholder="Type your message..."
+               required>
+
+        <button type="submit">
+
+            Send
+
+        </button>
+
     </form>
 
 </div>

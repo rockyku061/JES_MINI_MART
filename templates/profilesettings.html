@@ -1,63 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile Settings - JES Student Mart</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - JES MINI MART</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+    <style>
+        body{
+            background:#002b5c;
+            font-family:Arial, sans-serif;
+            margin:0;
+            color:white;
+        }
+
+        .navbar{
+            background:#0047ab;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .logo-section{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+
+        .logo{
+            width:50px;
+            height:50px;
+            border-radius:50%;
+        }
+
+        .nav-links a{
+            color:white;
+            text-decoration:none;
+            margin-left:15px;
+            background:white;
+            color:#002b5c;
+            padding:10px 15px;
+            border-radius:20px;
+            font-weight:bold;
+        }
+
+        .profile-container{
+            width:500px;
+            margin:40px auto;
+            background:white;
+            color:black;
+            padding:30px;
+            border-radius:15px;
+        }
+
+        .profile-container h2{
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        form{
+            display:flex;
+            flex-direction:column;
+        }
+
+        input, textarea{
+            margin-bottom:15px;
+            padding:12px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            font-size:16px;
+        }
+
+        button{
+            background:#0047ab;
+            color:white;
+            padding:12px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+        }
+
+        button:hover{
+            background:#00337a;
+        }
+
+        .back-link{
+            display:block;
+            text-align:center;
+            margin-top:20px;
+            color:#0047ab;
+            text-decoration:none;
+            font-weight:bold;
+        }
+    </style>
 </head>
+
 <body>
+
 <header class="navbar">
 
-  <div class="logo-section">
-    <img src="{{ url_for('static', filename='logo.jpg') }}" class="logo">
-    <h1>JES MINI MART</h1>
-  </div>
+    <div class="logo-section">
+        <img src="{{ url_for('static', filename='logo.jpg') }}" class="logo">
+        <h1>JES MINI MART</h1>
+    </div>
 
-  <nav class="nav-links">
-    <a href="{{ url_for('student_dashboard') }}" class="navbar-btn">🏠 Home</a>
-    <a href="{{ url_for('purchase_history_page') }}" class="navbar-btn">📜 Purchase History</a>
-    <a href="{{ url_for('logout') }}" class="navbar-btn">🚪 Logout</a>
-  </nav>
+    <nav class="nav-links">
+        <a href="{{ url_for('student_dashboard') }}">🏠 Home</a>
+        <a href="{{ url_for('purchase_history') }}">📜 Orders</a>
+        <a href="{{ url_for('logout') }}">🚪 Logout</a>
+    </nav>
 
 </header>
 
 <div class="profile-container">
-  
+
+    <h2>Profile Settings</h2>
+
+    <form method="POST">
+
+        <label>Username</label>
+        <input type="text" name="username" value="{{ user.username }}">
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ user.email }}">
+
+        <label>Password</label>
+        <input type="password" name="password" value="{{ user.password }}">
+
+        <label>Phone Number</label>
+        <input type="text" name="phone" value="{{ user.phone }}">
+
+        <label>College</label>
+        <input type="text" name="college" value="{{ user.college }}">
+
+        <button type="submit">Save Changes</button>
+
+    </form>
+
+    <a href="{{ url_for('student_dashboard') }}" class="back-link">
+        ← Back to Dashboard
+    </a>
+
 </div>
 
-  <form method="POST">
-
-    <label>Full Name</label>
-    <input type="text" name="username" value="{{ user.username }}">
-
-    <label>Email</label>
-    <input type="email" name="email" value="{{ user.email }}">
-
-    <label>Password</label>
-    <input type="password" name="password" value="{{ user.password }}">
-
-    <label>Contact Number</label>
-    <input type="text" name="phone">
-
-    <label>Address</label>
-    <textarea name="address"></textarea>
-
-    <button type="submit">Save Changes</button>
-
-  </form>
-
-</div>
-
-    <a href="
-  {% if user.role == 'staff' %}
-    {{ url_for('staff_dashboard') }}
-  {% else %}
-    {{ url_for('student_dashboard') }}
-  {% endif %}
-" class="back-link">← Back to Dashboard</a>
-  </div>
-
-  </div>
 </body>
 </html>

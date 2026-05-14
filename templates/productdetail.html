@@ -1,78 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ product.name }} | JES STUDENT MART</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>{{ product['name'] }} | JES MINI MART</title>
+
+  <link rel="stylesheet"
+        href="{{ url_for('static',
+        filename='dashboard.css') }}">
+
+  <style>
+
+    body{
+      margin:0;
+      padding:0;
+      background:#002b5c;
+      font-family:Arial, sans-serif;
+      color:white;
+    }
+
+    .navbar{
+      background:#004aad;
+      padding:15px 25px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:30px;
+      font-weight:bold;
+    }
+
+    .navbar-btn{
+      background:white;
+      color:#002b5c;
+      text-decoration:none;
+      padding:10px 18px;
+      border-radius:20px;
+      font-weight:bold;
+    }
+
+    .olx-container{
+      width:90%;
+      margin:auto;
+      margin-top:30px;
+      margin-bottom:40px;
+    }
+
+    .olx-card{
+      background:white;
+      color:black;
+      border-radius:15px;
+      padding:30px;
+      display:flex;
+      gap:40px;
+      flex-wrap:wrap;
+    }
+
+    .olx-image img{
+      width:350px;
+      height:350px;
+      object-fit:cover;
+      border-radius:15px;
+    }
+
+    .olx-details{
+      flex:1;
+    }
+
+    .olx-details h2{
+      font-size:36px;
+      margin-bottom:10px;
+    }
+
+    .price{
+      color:#0052cc;
+      font-size:32px;
+      margin-bottom:20px;
+    }
+
+    .desc{
+      font-size:18px;
+      line-height:1.6;
+    }
+
+    .seller-box{
+      margin-top:25px;
+      background:#f2f2f2;
+      padding:15px;
+      border-radius:10px;
+    }
+
+    .action-buttons{
+      margin-top:25px;
+      display:flex;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .action-buttons button{
+      padding:12px 20px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+    }
+
+    .cart-btn{
+      background:#0052cc;
+    }
+
+    .chat-btn{
+      background:#00a884;
+    }
+
+    .sold-btn{
+      background:#e63946;
+    }
+
+    .review-section{
+      margin-top:30px;
+      background:white;
+      color:black;
+      padding:20px;
+      border-radius:12px;
+    }
+
+  </style>
+
 </head>
 
-<body class="student-page">
-  
-   
-<!-- Navbar -->
+<body>
+
+<!-- NAVBAR -->
 <div class="navbar">
-  <div class="logo">JES MINI MART</div>
-  <a href="{{ url_for('student_dashboard') }}" class="navbar-btn">🏠 Back to Dashboard</a>
+
+  <div class="logo">
+    JES MINI MART
+  </div>
+
+  <a href="{{ url_for('student_dashboard') }}"
+     class="navbar-btn">
+
+     🏠 Back to Dashboard
+
+  </a>
+
 </div>
 
-<!-- OLX Style Product Detail -->
+<!-- PRODUCT DETAIL -->
 <div class="olx-container">
 
   <div class="olx-card">
 
-    <!-- Left Image -->
+    <!-- PRODUCT IMAGE -->
     <div class="olx-image">
-      <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+
+      <img src="{{ url_for('static',
+                           filename=product['image']) }}"
+           alt="{{ product['name'] }}">
+
     </div>
 
-    <!-- Right Details -->
+    <!-- PRODUCT DETAILS -->
     <div class="olx-details">
 
-      <h2>{{ product.name }}</h2>
+      <h2>{{ product['name'] }}</h2>
 
-      <h3 class="price">₹ {{ product.price }}</h3>
+      <h3 class="price">
+        ₹ {{ product['price'] }}
+      </h3>
 
       <p class="desc">
-        {{ product.description }}
+        {{ product['description'] }}
       </p>
 
       <div class="seller-box">
-       <p><strong>Seller:</strong> {{ product.seller }}</p>
-        <p><strong>Location:</strong> College Campus</p>
-        <p class="views">👁 {{ product[6] }} views</p>
+
+        <p>
+          <strong>Seller:</strong>
+          {{ product['seller'] }}
+        </p>
+
+        <p>
+          <strong>Location:</strong>
+          College Campus
+        </p>
+
       </div>
 
-      <!-- Buttons -->
+      <!-- BUTTONS -->
       <div class="action-buttons">
 
-        <form method="POST" action="{{ url_for('cart_page') }}">
-          <input type="hidden" name="product_id" value="{{ product.id }}">
-          <button type="submit" class="cart-btn">🛒 Add to Cart</button>
+        <!-- ADD TO CART -->
+        <form action="{{ url_for('add_to_cart',
+                                 product_id=product['id']) }}"
+              method="POST">
+
+          <button type="submit"
+                  class="cart-btn">
+
+            🛒 Add to Cart
+
+          </button>
+
         </form>
 
-       <a href="{{ url_for('chat_page', product_name=product.name) }}">
-    <button class="chat-btn">💬 Chat with Seller</button>
+        <!-- CHAT BUTTON -->
+        <a href="{{ url_for('chat_page',
+                    seller=product['seller'],
+                    product_name=product['name']) }}">
+
+    <button type="button"
+            class="chat-btn">
+
+        💬 Chat with Seller
+
+    </button>
+
 </a>
-{% if session['username'] == product.seller %}
-<form method="POST" action="{{ url_for('mark_sold', product_id=product.id) }}">
-<button class="sold-btn">❌ Sold Out</button>
-</form>
-{% endif %}
+        <!-- MARK SOLD -->
+        <form action="{{ url_for('mark_sold',
+                                 product_id=product['id']) }}"
+              method="POST">
+
+          <button type="submit"
+                  class="sold-btn">
+
+            ✅ Mark as Sold
+
+          </button>
+
+        </form>
 
       </div>
+
     </div>
 
   </div>
 
-  <!-- Reviews Section -->
+  <!-- REVIEW SECTION -->
   <div class="review-section">
+
     <h3>Customer Reviews</h3>
-    <a href="{{ url_for('feedback_page') }}" class="navbar-btn">💬 Feedback</a>
+
+    <a href="{{ url_for('feedback_page') }}"
+       class="navbar-btn">
+
+       💬 Give Feedback
+
+    </a>
+
   </div>
 
 </div>
 
 </body>
 </html>
-

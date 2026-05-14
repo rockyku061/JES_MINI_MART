@@ -1,51 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Purchase History - JES Student Mart</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Purchase History - JES MINI MART</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='dashboard.css') }}">
+
+    <style>
+
+        body{
+            background:#002b5c;
+            color:white;
+            font-family:Arial;
+        }
+
+        .main-container{
+            width:90%;
+            margin:auto;
+            margin-top:30px;
+        }
+
+        .welcome-section{
+            background:#0052cc;
+            padding:20px;
+            border-radius:12px;
+            margin-bottom:30px;
+        }
+
+        .product-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:20px;
+        }
+
+        .product-card{
+            background:white;
+            color:black;
+            border-radius:12px;
+            padding:20px;
+            text-align:center;
+        }
+
+        .product-card img{
+            width:120px;
+            height:120px;
+            object-fit:cover;
+            border-radius:10px;
+            margin-bottom:15px;
+        }
+
+        .price{
+            color:#0052cc;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .empty-box{
+            background:white;
+            color:black;
+            padding:20px;
+            border-radius:10px;
+        }
+
+    </style>
+
 </head>
+
 <body>
- 
 
-  <!-- Main Content -->
-  <div class="main-container">
-    <section class="left-panel">
-      <div class="welcome-section">
+<div class="main-container">
+
+    <div class="welcome-section">
+
         <h2>📜 Purchase History</h2>
-        <p>Here are your past orders.</p>
-      </div>
 
-      <!-- Static Purchase History -->
-      <section class="products">
-        <h3>My Orders</h3>
-        <div class="product-grid">
-          <div class="product-card">
-            <img src="https://via.placeholder.com/100" alt="Book">
-            <p><strong>Engineering Book</strong></p>
-            <p>Price: ₹500</p>
-            <p>Date: 15/09/2025</p>
-          </div>
+        <p>
+            Here are your past orders.
+        </p>
 
-          <div class="product-card">
-            <img src="https://via.placeholder.com/100" alt="Calculator">
-            <p><strong>Scientific Calculator</strong></p>
-            <p>Price: ₹1200</p>
-            <p>Date: 14/09/2025</p>
-          </div>
+    </div>
 
-          <div class="product-card">
-            <img src="https://via.placeholder.com/100" alt="Pen Set">
-            <p><strong>Pilot Pen Set</strong></p>
-            <p>Price: ₹150</p>
-            <p>Date: 12/09/2025</p>
-          </div>
+    {% if orders %}
+
+    <div class="product-grid">
+
+        {% for order in orders %}
+
+        <div class="product-card">
+
+            <img src="{{ url_for('static',
+                                 filename=order.image) }}"
+                 alt="{{ order.name }}">
+
+            <h3>{{ order.name }}</h3>
+
+            <p class="price">
+                ₹ {{ order.price }}
+            </p>
+
+            <p>
+                Seller: {{ order.seller }}
+            </p>
+
         </div>
-      </section>
-    </section>
-  </div>
 
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-box">
+
+        <h2>No Purchase History Found</h2>
+
+    </div>
+
+    {% endif %}
+
+</div>
 
 </body>
 </html>

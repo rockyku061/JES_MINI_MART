@@ -1,62 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Cart - JES MINI MART</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Cart | JES MINI MART</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='dashboard.css') }}">
+
+    <style>
+
+        body{
+            background:#002b5c;
+            color:white;
+            font-family:Arial;
+            margin:0;
+            padding:0;
+        }
+
+        .navbar{
+            width:100%;
+            background:#004aad;
+            padding:15px 25px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-sizing:border-box;
+        }
+
+        .logo{
+            font-size:32px;
+            font-weight:bold;
+        }
+
+        .navbar-btn{
+            background:white;
+            color:#002b5c;
+            padding:10px 18px;
+            border-radius:20px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .cart-container{
+            width:90%;
+            margin:auto;
+            margin-top:30px;
+            margin-bottom:40px;
+        }
+
+        .cart-item{
+            background:white;
+            color:black;
+            padding:20px;
+            border-radius:12px;
+            margin-bottom:20px;
+            display:flex;
+            gap:20px;
+            align-items:center;
+        }
+
+        .cart-item img{
+            width:150px;
+            height:150px;
+            object-fit:cover;
+            border-radius:10px;
+        }
+
+        .cart-details{
+            flex:1;
+        }
+
+        .cart-details h2{
+            margin-bottom:10px;
+        }
+
+        .price{
+            color:#0052cc;
+            font-size:24px;
+            font-weight:bold;
+        }
+
+        .btn{
+            padding:12px 20px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            color:white;
+            font-weight:bold;
+            width:100%;
+        }
+
+        .remove-btn{
+            background:#e63946;
+        }
+
+        .checkout-btn{
+            background:#00a884;
+            margin-top:20px;
+            font-size:18px;
+        }
+
+        .empty{
+            background:white;
+            color:black;
+            padding:20px;
+            border-radius:10px;
+        }
+
+    </style>
+
 </head>
+
 <body>
-  
 
-  <!-- Main Content -->
-  <div class="main-container">
-    <section class="left-panel">
-      <div class="welcome-section">
-        <h2>🛒 My Cart</h2>
-        <p>Here are the products you have added to your cart.</p>
-      </div>
+    <div class="navbar">
 
-      <!-- Static Cart Items -->
-      <section class="products">
-        <h3>Cart Items</h3>
-        <div class="product-grid">
-          <div class="product-card">
-            <img src="https://via.placeholder.com/100" alt="Book">
-            <p><strong>Engineering Book</strong></p>
-            <p>Price: ₹500</p>
-            <button>Remove</button>
-            
-          </div>
-
-          <div class="product-card">
-            <img src="https://via.placeholder.com/100" alt="Calculator">
-            <p><strong>Scientific Calculator</strong></p>
-            <p>Price: ₹1200</p>
-            <button>Remove</button>
-          </div>
+        <div class="logo">
+            JES MINI MART
         </div>
-      </section>
-      
-{% for item in cart_items %}
-    <div class="cart-item">
-        ...
 
-        <form method="POST" action="/remove_from_cart">
-            <input type="hidden" name="item_id" value="{{ item.id }}">
-            <button type="submit" class="remove-btn">Remove</button>
-        </form>
+        <a href="{{ url_for('student_dashboard') }}"
+           class="navbar-btn">
+
+           🏠 Dashboard
+
+        </a>
+
     </div>
-{% endfor %}
-      <!-- Checkout Button -->
-      <div style="margin: 20px 0;">
-        <button style="padding: 12px 20px; font-size: 16px; background:#0052cc; color:white; border:none; border-radius:8px; cursor:pointer;">
-          ✅ Proceed to Checkout
-        </button>
-      </div>
-    </section>
-  </div>
 
-  
+    <div class="cart-container">
+
+        <h1>🛒 My Cart</h1>
+
+        <p>Products added to your cart</p>
+
+        <br>
+
+        {% if cart_items %}
+
+            {% for item in cart_items %}
+
+            <div class="cart-item">
+
+                <img src="{{ url_for('static',
+                                     filename=item['image']) }}">
+
+                <div class="cart-details">
+
+                    <h2>{{ item['name'] }}</h2>
+
+                    <p class="price">
+                        ₹ {{ item['price'] }}
+                    </p>
+
+                    <p>
+                        {{ item['description'] }}
+                    </p>
+
+                    <p>
+                        Seller: {{ item['seller'] }}
+                    </p>
+
+                    <br>
+
+                    <form action="{{ url_for('remove_from_cart',
+                                             product_id=item['product_id']) }}"
+                          method="POST">
+
+                        <button class="btn remove-btn"
+                                type="submit">
+
+                            Remove
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+            <form action="{{ url_for('checkout') }}"
+                  method="POST">
+
+                <button class="btn checkout-btn"
+                        type="submit">
+
+                    Proceed to Checkout
+
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <div class="empty">
+
+                <h2>Your cart is empty</h2>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
 </body>
 </html>

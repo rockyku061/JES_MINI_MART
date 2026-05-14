@@ -1,104 +1,309 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
   <title>Student Dashboard - JES MINI MART</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+
+  <link rel="stylesheet"
+        href="{{ url_for('static',
+        filename='dashboard.css') }}">
+
 </head>
 
 <body class="student-page">
 
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-    <!-- Logo -->
+    <!-- LOGO -->
     <div class="logo-section">
-        <img src="{{ url_for('static', filename='logo.jpg') }}" class="logo">
+
+        <img src="{{ url_for('static',
+                             filename='logo.jpg') }}"
+             class="logo">
+
         <h1>JES MINI MART</h1>
+
     </div>
 
-    <!-- Search -->
-    <form method="GET" action="{{ url_for('student_dashboard') }}" class="search-container">
+    <!-- SEARCH -->
+    <form method="GET"
+          action="{{ url_for('student_dashboard') }}"
+          class="search-container">
 
-<input type="text" name="search" placeholder="Search products..." class="search">
+        <input type="text"
+               name="search"
+               placeholder="Search products..."
+               class="search">
 
-<button type="submit">🔍</button>
+        <button type="submit">
+            🔍
+        </button>
 
-</form>
+    </form>
 
-    <!-- Navigation Links -->
+    <!-- NAVIGATION -->
     <div class="nav-links">
-        <a href="{{ url_for('contact_page') }}" class="navbar-btn">📞 Contact</a>
-        <a href="{{ url_for('feedback_page') }}" class="navbar-btn">💬 Feedback</a>
-        <a href="{{ url_for('logout') }}" class="navbar-btn">⏻ Logout</a>
-        <span class="user">👨‍🎓 {{ session.username }}</span>
+
+        <a href="{{ url_for('contact_page') }}"
+           class="navbar-btn">
+
+           📞 Contact
+
+        </a>
+
+        <a href="{{ url_for('feedback_page') }}"
+           class="navbar-btn">
+
+           💬 Feedback
+
+        </a>
+
+        <a href="{{ url_for('logout') }}"
+           class="navbar-btn">
+
+           ⏻ Logout
+
+        </a>
+
+        <span class="user">
+
+            👨‍🎓 {{ session.username }}
+
+        </span>
+
     </div>
 
 </header>
-<!-- Main container -->
+
+<!-- ================= MAIN CONTAINER ================= -->
+
 <div class="container">
 
+  <!-- ================= MAIN SECTION ================= -->
+
   <section class="main-section">
-    <h2>Welcome {{ session.username }}</h2>
+
+    <h2>
+        Welcome {{ session.username }}
+    </h2>
+
+    <!-- DASHBOARD BUTTONS -->
 
     <div class="dashboard-buttons">
-      <a href="{{ url_for('student_dashboard') }}" class="dash-btn">📦<br>All Products</a>
-      <a href="{{ url_for('cart_page') }}" class="dash-btn">🛒<br>My Cart</a>
-      <a href="{{ url_for('purchase_history_page') }}" class="dash-btn">📜<br>My Orders</a>
-      <a href="{{ url_for('add_product') }}" class="dash-btn add-btn">➕<br>Add Product</a>
+
+      <a href="{{ url_for('student_dashboard') }}"
+         class="dash-btn">
+
+         📦<br>All Products
+
+      </a>
+
+      <a href="{{ url_for('cart_page') }}"
+         class="dash-btn">
+
+         🛒<br>My Cart
+
+      </a>
+
+      <a href="{{ url_for('purchase_history') }}"
+         class="dash-btn">
+
+         📜<br>My Orders
+
+      </a>
+
+      <a href="{{ url_for('seller_chats') }}"
+         class="dash-btn">
+
+         💬<br>Seller Chats
+
+      </a>
+
+      <a href="{{ url_for('add_product') }}"
+         class="dash-btn add-btn">
+
+         ➕<br>Add Product
+
+      </a>
+
     </div>
 
-<!-- Product Grid -->
-<div class="products">
+    <!-- ================= PRODUCT GRID ================= -->
 
-  {% if products %}
-    {% for product in products %}
+    <div class="products">
 
-    <div class="product-card">
-      <img src="{{ url_for('static', filename=product.image) }}" alt="Product Image" width="150">
+      {% if products %}
 
-      <p><strong>{{ product.name }}</strong></p>
-      <p>₹ {{ product.price }}</p>
+        {% for product in products %}
 
-      <!-- Description -->
-      <p style="font-size:13px; opacity:0.8; margin-bottom:8px;">
-        {{ product.description }}
-      </p>
+        <div class="product-card">
 
-      <!-- Buttons -->
-      <div style="display:flex; flex-direction:column; gap:8px;">
+          <img src="{{ url_for('static',
+                               filename=product['image']) }}"
+               alt="Product Image"
+               width="150">
 
-        <a href="{{ url_for('product_detail', product_id=product.id) }}">
-          <button type="button" class="btn">View Details</button>
-        </a>
+          <p>
 
-      </div>
+            <strong>
+                {{ product['name'] }}
+            </strong>
+
+          </p>
+
+          <p>
+            ₹ {{ product['price'] }}
+          </p>
+
+          <!-- DESCRIPTION -->
+
+          <p style="
+             font-size:13px;
+             opacity:0.8;
+             margin-bottom:8px;
+             ">
+
+            {{ product['description'] }}
+
+          </p>
+
+          <!-- BUTTONS -->
+
+          <div style="
+               display:flex;
+               flex-direction:column;
+               gap:8px;
+               ">
+
+            <a href="{{ url_for('product_detail',
+                                product_id=product['id']) }}">
+
+              <button type="button"
+                      class="btn">
+
+                  View Details
+
+              </button>
+
+            </a>
+
+          </div>
+
+        </div>
+
+        {% endfor %}
+
+      {% else %}
+
+        <p>
+            No products added yet.
+        </p>
+
+      {% endif %}
+
     </div>
 
-    {% endfor %}
-  {% else %}
-    <p>No products added yet.</p>
-  {% endif %}
-
-</div>
   </section>
 
-  <!-- Sidebar -->
+  <!-- ================= SIDEBAR ================= -->
+
   <aside class="sidebar">
-    <h3>My Favourite Links</h3>
+
+    <h3>
+        My Favourite Links
+    </h3>
+
     <ul>
-      <li>🛒 <a href="{{ url_for('cart_page') }}">View Cart</a></li>
-      <li>📜 <a href="{{ url_for('purchase_history_page') }}">My Orders</a></li>
-      <li>⚙️ <a href="{{ url_for('profile_settings') }}">Profile Settings</a></li>
-      <li>❓ <a href="{{ url_for('faq_page') }}">FAQs</a></li>
-      <li>ℹ️ <a href="{{ url_for('about_page') }}">About the Team</a></li>
+
+      <li>
+
+        🛒
+        <a href="{{ url_for('cart_page') }}">
+
+            View Cart
+
+        </a>
+
+      </li>
+
+      <li>
+
+        📜
+        <a href="{{ url_for('purchase_history') }}">
+
+            My Orders
+
+        </a>
+
+      </li>
+
+      <li>
+
+        💬
+        <a href="{{ url_for('seller_chats') }}">
+
+            Seller Chats
+
+        </a>
+
+      </li>
+
+      <li>
+
+        ⚙️
+        <a href="{{ url_for('profile_settings') }}">
+
+            Profile Settings
+
+        </a>
+
+      </li>
+
+      <li>
+
+        ❓
+        <a href="{{ url_for('faq_page') }}">
+
+            FAQs
+
+        </a>
+
+      </li>
+
+      <li>
+
+        ℹ️
+        <a href="{{ url_for('about_page') }}">
+
+            About the Team
+
+        </a>
+
+      </li>
+
     </ul>
+
   </aside>
 
 </div>
 
+<!-- ================= FOOTER ================= -->
+
 <footer class="main-footer">
-  <p>&copy; 2025 JES MINI MART. All rights reserved.</p>
+
+  <p>
+      &copy; 2025 JES MINI MART.
+      All rights reserved.
+  </p>
+
 </footer>
 
 </body>

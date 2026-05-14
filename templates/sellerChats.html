@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Seller Chats</title>
+
+    <style>
+
+        body{
+            background:#062b63;
+            font-family:Arial;
+            margin:0;
+            padding:20px;
+            color:white;
+        }
+
+        h1{
+            margin-bottom:30px;
+        }
+
+        .chat-card{
+            background:white;
+            color:black;
+            padding:20px;
+            border-radius:12px;
+            margin-bottom:20px;
+        }
+
+        .chat-card h3{
+            margin:0;
+            margin-bottom:10px;
+        }
+
+        .chat-card a{
+            text-decoration:none;
+            background:#0d6efd;
+            color:white;
+            padding:10px 20px;
+            border-radius:8px;
+            display:inline-block;
+            margin-top:10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>💬 Seller Chats</h1>
+
+    {% if chats %}
+
+        {% for chat in chats %}
+
+        <div class="chat-card">
+
+            <h3>
+                Buyer: {{ chat.buyer }}
+            </h3>
+
+            <p>
+                Product: {{ chat.product }}
+            </p>
+
+            <a href="{{ url_for('chat_page',
+                                 seller=session['username'],
+                                 product_name=chat.product) }}">
+
+                Open Chat
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <h2>No chats yet</h2>
+
+    {% endif %}
+
+</body>
+
+</html>

@@ -1,363 +1,707 @@
+from flask import Flask, render_template, request, redirect, url_for, session
 import csv
 import os
-import datetime
-from flask import Flask, render_template, request, redirect, session, url_for
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = "secret123"
+app.secret_key = "jes_mini_mart_secret"
 
-# ================= FILES =================
+# =========================
+# FILES
+# =========================
+
 USERS_FILE = "users.csv"
 PRODUCTS_FILE = "products.csv"
-ORDERS_FILE = "orders.csv"
+CART_FILE = "cart.csv"
+PURCHASE_FILE = "purchase_history.csv"
 
-# ================= CREATE FILES =================
-if not os.path.exists(USERS_FILE):
-    with open(USERS_FILE, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["username", "regdno", "email", "password"])
-
-if not os.path.exists(PRODUCTS_FILE):
-    with open(PRODUCTS_FILE, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["id", "name", "price", "description", "image"])
-
-if not os.path.exists(ORDERS_FILE):
-    with open(ORDERS_FILE, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["username", "product_name", "price", "date"])
-
-# ================= IMAGE UPLOAD =================
 UPLOAD_FOLDER = "static/uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-cart = []
+# =========================
+# CREATE FILES IF NOT EXISTS
+# =========================
 
-# ================= INDEX =================
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+if not os.path.exists(USERS_FILE):
+    with open(USERS_FILE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            "username",
+            "regdno",
+            "email",
+            "password",
+            "phone",
+            "college"
+        ])
+
+if not os.path.exists(PRODUCTS_FILE):
+    with open(PRODUCTS_FILE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            "id",
+            "name",
+            "price",
+            "description",
+            "image",
+            "seller"
+        ])
+
+if not os.path.exists(CART_FILE):
+    with open(CART_FILE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            "username",
+            "product_id",
+            "name",
+            "price",
+            "description",
+            "image",
+            "seller"
+        ])
+
+if not os.path.exists(PURCHASE_FILE):
+    with open(PURCHASE_FILE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow([
+            "username",
+            "name",
+            "price",
+            "image"
+        ])
+
+# =========================
+# HOME
+# =========================
+
 @app.route("/")
-def index():
+def home():
     return render_template("index.html")
 
-# ================= REGISTER =================
-@app.route("/register", methods=["GET", "POST"])
-def register_page():
-    if request.method == "POST":
-        username = request.form["name"]
-        regdno = request.form["regdno"]
-        email = request.form["email"]
-        password = request.form["password"]
-
-        with open(USERS_FILE, "a", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow([username, regdno, email, password])
-
-        return redirect(url_for("login"))
-
-    return render_template("register.html")
-
-# ================= LOGIN =================
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"].strip()
-        regdno = request.form["regdno"].strip()
-        password = request.form["password"].strip()
-
-        with open(USERS_FILE, "r") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                if (
-                    row["username"].strip() == username and
-                    row["regdno"].strip() == regdno and
-                    row["password"].strip() == password
-                ):
-                    session["username"] = username
-                    return redirect("/student_dashboard")
-
-        return "Invalid Credentials"
-
-    return render_template("login.html")
-
-# ================= LOGOUT =================
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect(url_for("index"))
-
-# ================= STUDENT DASHBOARD =================
-@app.route("/student_dashboard")
-def student_dashboard():
-    if "username" not in session:
-        return redirect("/login")
-
-    search_query = request.args.get("search", "").lower()
-    products = []
-
-    with open(PRODUCTS_FILE, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if search_query in row["name"].lower():
-                products.append(row)
-
-    return render_template("studentDashboard.html", products=products)
-
-# ================= PRODUCT DETAIL =================
-@app.route("/product/<int:product_id>")
-def product_detail(product_id):
-    product = None
-
-    with open(PRODUCTS_FILE, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if int(row["id"]) == product_id:
-                product = row
-                break
-
-    if not product:
-        return "Product not found"
-
-    return render_template("productDetail.html", product=product)
-
-@app.route("/mark_sold/<int:product_id>", methods=["POST"])
-def mark_sold(product_id):
-
-    updated_products = []
-
-    with open(PRODUCTS_FILE, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if int(row["id"]) != product_id:
-                updated_products.append(row)
-
-    with open(PRODUCTS_FILE, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=["id","name","price","description","image","seller"])
-        writer.writeheader()
-        writer.writerows(updated_products)
-
-    return redirect(url_for("student_dashboard"))
-
-# ================= ADD PRODUCT =================
-@app.route("/addProduct", methods=["GET", "POST"])
-def add_product():
-    if "username" not in session:
-        return redirect("/login")
-
-    if request.method == "POST":
-        name = request.form["productName"]
-        price = request.form["productPrice"]
-        description = request.form["productDescription"]
-        image_file = request.files["productImage"]
-
-        image_path = ""
-
-        if image_file and image_file.filename != "":
-            filename = secure_filename(image_file.filename)
-            filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-            image_file.save(filepath)
-            image_path = "uploads/" + filename
-
-        # generate new product id
-        with open(PRODUCTS_FILE, "r") as f:
-            reader = list(csv.reader(f))
-            new_id = len(reader)
-
-        # save seller name
-        seller = session["username"]
-
-        with open(PRODUCTS_FILE, "a", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow([new_id, name, price, description, image_path, seller])
-
-        return redirect("/student_dashboard")
-
-    return render_template("addProduct.html")
-
-
-# ================= PROFILE SETTING =================
-@app.route("/profile_settings", methods=["GET","POST"])
-def profile_settings():
-
-    if "username" not in session:
-        return redirect("/login")
-
-    user = None
-
-    with open(USERS_FILE, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if row["username"] == session["username"]:
-                user = row
-                break
-
-    if request.method == "POST":
-
-        new_name = request.form["username"]
-        new_email = request.form["email"]
-        new_password = request.form["password"]
-
-        users = []
-
-        with open(USERS_FILE, "r") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                if row["username"] == session["username"]:
-                    row["username"] = new_name
-                    row["email"] = new_email
-                    row["password"] = new_password
-                    session["username"] = new_name
-                users.append(row)
-
-        with open(USERS_FILE, "w", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=["username","regdno","email","password"])
-            writer.writeheader()
-            writer.writerows(users)
-
-        return redirect("/student_dashboard")
-
-    return render_template("profilesettings.html", user=user)
-
-# ================= CART =================
-@app.route("/cart", methods=["GET", "POST"])
-def cart_page():
-    if "username" not in session:
-        return redirect("/login")
-
-    if request.method == "POST":
-        product_id = request.form["product_id"]
-
-        with open(PRODUCTS_FILE, "r") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                if row["id"] == product_id:
-                    cart.append(row)
-                    break
-
-        # stay on dashboard after adding
-        return redirect("/student_dashboard")
-
-    return render_template("cart.html", cart=cart)
-
-# ================= ADD TO CART =================
-@app.route("/add_to_cart", methods=["POST"])
-def add_to_cart():
-
-    if "username" not in session:
-        return redirect("/login")
-
-    product_id = request.form["product_id"]
-
-    with open(PRODUCTS_FILE, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if row["id"] == product_id:
-                cart.append(row)
-                break
-
-    # stay on dashboard
-    return redirect(url_for("student_dashboard"))
-
-# ================= CHECKOUT =================
-@app.route("/checkout", methods=["POST"])
-def checkout():
-    if "username" not in session:
-        return redirect("/login")
-
-    username = session["username"]
-    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    for item in cart:
-        with open(ORDERS_FILE, "a", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow([username, item["name"], item["price"], now])
-
-    cart.clear()
-    return redirect("/purchaseHistory")
-
-# ================= PURCHASE HISTORY =================
-@app.route("/purchaseHistory")
-def purchase_history_page():
-    if "username" not in session:
-        return redirect("/login")
-
-    username = session["username"]
-    history = []
-
-    with open(ORDERS_FILE, "r") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            if row["username"] == username:
-                history.append(row)
-
-    return render_template("purchaseHistory.html", history=history)
-
-# ================= CHAT  =================
-@app.route("/chat/<product_name>", methods=["GET", "POST"])
-def chat_page(product_name):
-    if "username" not in session:
-        return redirect("/login")
-
-    if "chat_messages" not in session:
-        session["chat_messages"] = []
-
-    if request.method == "POST":
-        message = request.form["message"]
-
-        session["chat_messages"].append({
-            "text": message,
-            "type": "sent"
-        })
-
-        session.modified = True
-
-    return render_template("chat.html",
-                           product_name=product_name,
-                           messages=session["chat_messages"])
-    
-# ================= FEEDBACK PAGE =================
-FEEDBACK_FILE = "feedback.csv"
-
-if not os.path.exists(FEEDBACK_FILE):
-    with open(FEEDBACK_FILE, "w", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(["username", "rating", "comment"])
-
-@app.route("/feedback", methods=["GET", "POST"])
-def feedback_page():
-    if "username" not in session:
-        return redirect("/login")
-
-    if request.method == "POST":
-        rating = request.form["rating"]
-        comment = request.form["comment"]
-        username = session["username"]
-
-        with open(FEEDBACK_FILE, "a", newline="") as f:
-            writer = csv.writer(f)
-            writer.writerow([username, rating, comment])
-
-        return redirect("/student_dashboard")
-
-    return render_template("feedback.html")
-
-    
-    
-    
-# ================= OTHER PAGES =================
 @app.route("/contact")
 def contact_page():
     return render_template("contact.html")
+
+
+@app.route("/feedback")
+def feedback_page():
+    return render_template("feedback.html")
 
 
 @app.route("/faq")
 def faq_page():
     return render_template("faq.html")
 
+
 @app.route("/about")
 def about_page():
     return render_template("about.html")
 
-# ================= RUN =================
+# =========================
+# REGISTER
+# =========================
+
+@app.route("/register", methods=["GET", "POST"])
+def register_page():
+
+    if request.method == "POST":
+
+        username = request.form["name"]
+        regdno = request.form["regdno"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        phone = ""
+        college = ""
+
+        with open(USERS_FILE, "a", newline="", encoding="utf-8") as f:
+
+            writer = csv.writer(f)
+
+            writer.writerow([
+                username,
+                regdno,
+                email,
+                password,
+                phone,
+                college
+            ])
+
+        return redirect(url_for("login"))
+
+    return render_template("register.html")
+
+# =========================
+# LOGIN
+# =========================
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+
+        username = request.form["username"].strip()
+        regdno = request.form["regdno"].strip()
+        password = request.form["password"].strip()
+
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+
+            reader = csv.reader(f)
+
+            next(reader, None)
+
+            for row in reader:
+
+                if len(row) < 6:
+                    continue
+
+                if (
+                    row[0] == username and
+                    row[1] == regdno and
+                    row[3] == password
+                ):
+
+                    session["username"] = row[0]
+                    session["regdno"] = row[1]
+                    session["email"] = row[2]
+                    session["phone"] = row[4]
+                    session["college"] = row[5]
+
+                    return redirect("/student_dashboard")
+
+        return "Invalid Credentials"
+
+    return render_template("login.html")
+
+# =========================
+# LOGOUT
+# =========================
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
+# =========================
+# DASHBOARD
+# =========================
+
+@app.route("/student_dashboard")
+def student_dashboard():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    products = []
+
+    with open(PRODUCTS_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.DictReader(f)
+
+        for row in reader:
+            products.append(row)
+
+    return render_template(
+        "studentDashboard.html",
+        products=products,
+        username=session["username"]
+    )
+
+# =========================
+# ADD PRODUCT
+# =========================
+
+@app.route("/addProduct", methods=["GET", "POST"])
+def add_product():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    if request.method == "POST":
+
+        name = request.form["productName"]
+        price = request.form["productPrice"]
+        description = request.form["productDescription"]
+
+        image_file = request.files["productImage"]
+
+        image_path = ""
+
+        if image_file and image_file.filename != "":
+
+            filename = secure_filename(image_file.filename)
+
+            filepath = os.path.join(
+                app.config["UPLOAD_FOLDER"],
+                filename
+            )
+
+            image_file.save(filepath)
+
+            image_path = "uploads/" + filename
+
+        rows = []
+
+        with open(PRODUCTS_FILE, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            rows = list(reader)
+
+        new_id = len(rows)
+
+        with open(PRODUCTS_FILE, "a", newline="", encoding="utf-8") as f:
+
+            writer = csv.writer(f)
+
+            writer.writerow([
+                new_id,
+                name,
+                price,
+                description,
+                image_path,
+                session["username"]
+            ])
+
+        return redirect("/student_dashboard")
+
+    return render_template("addProduct.html")
+
+# =========================
+# PRODUCT DETAILS
+# =========================
+
+@app.route("/product/<int:product_id>")
+def product_detail(product_id):
+
+    product = None
+
+    with open(PRODUCTS_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.DictReader(f)
+
+        for row in reader:
+
+            try:
+                if int(row["id"]) == product_id:
+                    product = row
+                    break
+            except:
+                pass
+
+    if not product:
+        return "Product not found"
+
+    return render_template(
+        "productdetail.html",
+        product=product
+    )
+    
+# =========================
+# CHAT PAGE
+# =========================
+
+@app.route("/chat/<seller>/<product_name>",
+           methods=["GET", "POST"])
+def chat_page(seller, product_name):
+
+    if "username" not in session:
+        return redirect("/login")
+
+    current_user = session["username"]
+
+    # SEND MESSAGE
+    if request.method == "POST":
+
+        message = request.form["message"]
+
+        with open("messages.csv",
+                  "a",
+                  newline="",
+                  encoding="utf-8") as f:
+
+            writer = csv.writer(f)
+
+            writer.writerow([
+                current_user,
+                seller,
+                product_name,
+                message
+            ])
+
+    messages = []
+
+    # CREATE FILE IF NOT EXISTS
+    if not os.path.exists("messages.csv"):
+
+        with open("messages.csv",
+                  "w",
+                  newline="",
+                  encoding="utf-8") as f:
+
+            writer = csv.writer(f)
+
+            writer.writerow([
+                "sender",
+                "seller",
+                "product",
+                "message"
+            ])
+
+    # LOAD CHAT
+    with open("messages.csv",
+              "r",
+              encoding="utf-8") as f:
+
+        reader = csv.DictReader(f)
+
+        for row in reader:
+
+            if (
+                row["seller"] == seller and
+                row["product"] == product_name
+            ):
+
+                messages.append(row)
+
+    return render_template(
+        "chat.html",
+        messages=messages,
+        seller=seller,
+        product_name=product_name,
+        current_user=current_user
+    )
+    
+@app.route("/mark_sold/<int:product_id>", methods=["POST"])
+def mark_sold(product_id):
+
+    rows = []
+
+    with open(PRODUCTS_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.reader(f)
+
+        for row in reader:
+
+            if row[0] == "id":
+                rows.append(row)
+                continue
+
+            if int(row[0]) != product_id:
+                rows.append(row)
+
+    with open(PRODUCTS_FILE, "w", newline="", encoding="utf-8") as f:
+
+        writer = csv.writer(f)
+        writer.writerows(rows)
+
+    return redirect(url_for("student_dashboard"))
+
+   
+# =========================
+# SELLER CHATS
+# =========================
+
+@app.route("/seller_chats")
+def seller_chats():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    seller = session["username"]
+
+    chats = []
+
+    with open("messages.csv",
+              "r",
+              encoding="utf-8") as f:
+
+        reader = csv.DictReader(f)
+
+        for row in reader:
+
+            if row["seller"] == seller:
+                chats.append(row)
+
+    return render_template(
+        "sellerChats.html",
+        chats=chats
+    )
+
+
+# =========================
+# ADD TO CART
+# =========================
+
+@app.route("/add_to_cart/<int:product_id>", methods=["POST"])
+def add_to_cart(product_id):
+
+    if "username" not in session:
+        return redirect("/login")
+
+    product = None
+
+    with open(PRODUCTS_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.DictReader(f)
+
+        for row in reader:
+
+            try:
+                if int(row["id"]) == product_id:
+                    product = row
+                    break
+            except:
+                pass
+
+    if not product:
+        return "Product not found"
+
+    with open(CART_FILE, "a", newline="", encoding="utf-8") as f:
+
+        writer = csv.writer(f)
+
+        writer.writerow([
+            session["username"],
+            product["id"],
+            product["name"],
+            product["price"],
+            product["description"],
+            product["image"],
+            product["seller"]
+        ])
+
+    return redirect(url_for("cart_page"))
+
+# =========================
+# CART PAGE
+# =========================
+
+@app.route("/cart")
+def cart_page():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    cart_items = []
+
+    with open(CART_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.reader(f)
+
+        next(reader, None)
+
+        for row in reader:
+
+            if len(row) < 7:
+                continue
+
+            if row[0] == session["username"]:
+
+                cart_items.append({
+                    "username": row[0],
+                    "product_id": row[1],
+                    "name": row[2],
+                    "price": row[3],
+                    "description": row[4],
+                    "image": row[5],
+                    "seller": row[6]
+                })
+
+    return render_template(
+        "cart.html",
+        cart_items=cart_items
+    )
+# =========================
+# REMOVE CART ITEM
+# =========================
+
+@app.route("/remove_from_cart/<product_id>", methods=["POST"])
+def remove_from_cart(product_id):
+
+    if "username" not in session:
+        return redirect("/login")
+
+    rows = []
+
+    removed = False
+
+    with open(CART_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.reader(f)
+
+        for row in reader:
+
+            if row[0] == "username":
+                rows.append(row)
+                continue
+
+            if (
+                not removed and
+                row[0] == session["username"] and
+                row[1] == product_id
+            ):
+                removed = True
+                continue
+
+            rows.append(row)
+
+    with open(CART_FILE, "w", newline="", encoding="utf-8") as f:
+
+        writer = csv.writer(f)
+        writer.writerows(rows)
+
+    return redirect(url_for("cart_page"))
+
+# =========================
+# CHECKOUT
+# =========================
+
+@app.route("/checkout", methods=["POST"])
+def checkout():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    username = session["username"]
+
+    cart_items = []
+    remaining_rows = []
+
+    with open(CART_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.reader(f)
+
+        for row in reader:
+
+            if row[0] == "username":
+                remaining_rows.append(row)
+                continue
+
+            if row[0] == username:
+                cart_items.append(row)
+            else:
+                remaining_rows.append(row)
+
+    with open(PURCHASE_FILE, "a", newline="", encoding="utf-8") as f:
+
+        writer = csv.writer(f)
+
+        for item in cart_items:
+
+            writer.writerow([
+                username,
+                item[2],
+                item[3],
+                item[5]
+            ])
+
+    with open(CART_FILE, "w", newline="", encoding="utf-8") as f:
+
+        writer = csv.writer(f)
+        writer.writerows(remaining_rows)
+
+    return redirect(url_for("purchase_history"))
+
+# =========================
+# PURCHASE HISTORY
+# =========================
+
+@app.route("/purchase_history")
+def purchase_history():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    orders = []
+
+    with open(PURCHASE_FILE, "r", encoding="utf-8") as f:
+
+        reader = csv.DictReader(f)
+
+        for row in reader:
+
+            if row["username"] == session["username"]:
+                orders.append(row)
+
+    return render_template(
+        "purchaseHistory.html",
+        orders=orders
+    )
+
+# =========================
+# PROFILE SETTINGS
+# =========================
+
+@app.route("/profile_settings", methods=["GET", "POST"])
+def profile_settings():
+
+    if "username" not in session:
+        return redirect("/login")
+
+    current_username = session["username"]
+
+    if request.method == "POST":
+
+        new_username = request.form["username"]
+        new_email = request.form["email"]
+        new_password = request.form["password"]
+        new_phone = request.form["phone"]
+        new_college = request.form["college"]
+
+        updated_rows = []
+
+        with open(USERS_FILE, "r", encoding="utf-8") as f:
+
+            reader = csv.reader(f)
+
+            for row in reader:
+
+                if row[0] == "username":
+                    updated_rows.append(row)
+                    continue
+
+                if row[0] == current_username:
+
+                    row = [
+                        new_username,
+                        row[1],
+                        new_email,
+                        new_password,
+                        new_phone,
+                        new_college
+                    ]
+
+                updated_rows.append(row)
+
+        with open(USERS_FILE, "w", newline="", encoding="utf-8") as f:
+
+            writer = csv.writer(f)
+            writer.writerows(updated_rows)
+
+        session["username"] = new_username
+        session["email"] = new_email
+        session["phone"] = new_phone
+        session["college"] = new_college
+
+        return redirect(url_for("profile_settings"))
+
+    user = {
+        "username": session.get("username", ""),
+        "email": session.get("email", ""),
+        "phone": session.get("phone", ""),
+        "college": session.get("college", "")
+    }
+
+    return render_template(
+        "profilesettings.html",
+        user=user
+    )
+
+# =========================
+# RUN
+# =========================
+
 if __name__ == "__main__":
     app.run(debug=True)

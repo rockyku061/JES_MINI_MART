@@ -371,12 +371,13 @@ def chat_page(seller, buyer, product_name):
 })
 
         return redirect(
-            url_for(
-                "chat_page",
-                seller=seller,
-                product_name=product_name
-            )
-        )
+    url_for(
+        "chat_page",
+        seller=seller,
+        buyer=buyer,
+        product_name=product_name
+    )
+)
 
     messages = []
 

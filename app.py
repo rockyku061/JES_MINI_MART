@@ -386,14 +386,13 @@ def chat_page(seller, product_name):
         for row in reader:
 
             if (
-                row["seller"] == seller and
-                row["product"] == product_name
-            ):
-
+    row.get("seller") == seller and
+    row.get("product") == product_name
+):
                 messages.append({
-                    "sender": row["sender"],
-                    "message": row["message"]
-                })
+    "sender": row.get("sender", ""),
+    "message": row.get("message", "")
+})
 
     return render_template(
         "chat.html",
@@ -443,22 +442,25 @@ def seller_chats():
 
     chats = []
 
-    with open("messages.csv",
-              "r",
-              encoding="utf-8") as f:
+    with open(
+        "messages.csv",
+        "r",
+        newline="",
+        encoding="utf-8"
+    ) as f:
 
         reader = csv.DictReader(f)
 
         for row in reader:
 
-            if row["seller"] == seller:
+            if row.get("seller") == seller:
+
                 chats.append(row)
 
     return render_template(
         "sellerChats.html",
         chats=chats
     )
-
 
 # =========================
 # ADD TO CART

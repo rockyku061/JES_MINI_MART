@@ -443,16 +443,44 @@ def seller_chats():
 
     chats = []
 
-    with open("messages.csv",
-              "r",
-              encoding="utf-8") as f:
+    if not os.path.exists("messages.csv"):
+        return render_template(
+            "sellerChats.html",
+            chats=[]
+        )
+
+    with open(
+        "messages.csv",
+        "r",
+        encoding="utf-8"
+    ) as f:
 
         reader = csv.DictReader(f)
 
         for row in reader:
 
-            if row["seller"] == seller:
-                chats.append(row)
+            if row.get("seller") == seller:
+
+                already_exists = False
+
+                for chat in chats:
+
+                    if (
+                        chat["buyer"] == row["buyer"]
+                        and
+                        chat["product"] == row["product"]
+                    ):
+
+                        already_exists = True
+                        break
+
+                if not already_exists:
+
+                    chats.append({
+                        "buyer": row.get("buyer", ""),
+                        "seller": row.get("seller", ""),
+                        "product": row.get("product", "")
+                    })
 
     return render_template(
         "sellerChats.html",

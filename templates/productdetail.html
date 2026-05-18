@@ -214,8 +214,9 @@
 
         <!-- CHAT BUTTON -->
         <a href="{{ url_for('chat_page',
-                    seller=product['seller'],
-                    product_name=product['name']) }}">
+                     seller=product.seller,
+                     buyer=session['username'],
+                     product_name=product.name) }}">
 
     <button type="button"
             class="chat-btn">

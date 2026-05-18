@@ -65,8 +65,9 @@
             </p>
 
             <a href="{{ url_for('chat_page',
-                                 seller=session['username'],
-                                 product_name=chat.product) }}">
+                     seller=session['username'],
+                     product_name=chat.product,
+                     buyer=chat.buyer) }}">
 
                 Open Chat
 

@@ -302,14 +302,17 @@ def product_detail(product_id):
 # CHAT PAGE
 # =========================
 
-@app.route("/chat/<seller>/<product_name>",
+@app.route("/chat/<seller>/<buyer>/<product_name>",
            methods=["GET", "POST"])
-def chat_page(seller, product_name):
+def chat_page(seller, buyer, product_name):
 
     if "username" not in session:
         return redirect("/login")
 
     current_user = session["username"]
+
+    if current_user != seller:
+     buyer = current_user
 
     # CREATE FILE
     if not os.path.exists("messages.csv"):
@@ -323,12 +326,13 @@ def chat_page(seller, product_name):
 
             writer = csv.writer(f)
 
-            writer.writerow([
-                "sender",
-                "seller",
-                "product",
-                "message"
-            ])
+        writer.writerow([
+    "buyer",
+    "seller",
+    "product",
+    "sender",
+    "message"
+])
 
     # SEND MESSAGE
     if request.method == "POST":
@@ -349,28 +353,31 @@ def chat_page(seller, product_name):
 
                 writer = csv.DictWriter(
                     f,
-                    fieldnames=[
-                        "sender",
-                        "seller",
-                        "product",
-                        "message"
-                    ]
+                  fieldnames=[
+    "buyer",
+    "seller",
+    "product",
+    "sender",
+    "message"
+]
                 )
 
                 writer.writerow({
-                    "sender": current_user,
-                    "seller": seller,
-                    "product": product_name,
-                    "message": message
-                })
+    "buyer": buyer,
+    "seller": seller,
+    "product": product_name,
+    "sender": current_user,
+    "message": message
+})
 
         return redirect(
-            url_for(
-                "chat_page",
-                seller=seller,
-                product_name=product_name
-            )
-        )
+    url_for(
+        "chat_page",
+        seller=seller,
+        buyer=buyer,
+        product_name=product_name
+    )
+)
 
     messages = []
 
@@ -385,15 +392,15 @@ def chat_page(seller, product_name):
 
         for row in reader:
 
-            if (
-                row["seller"] == seller and
-                row["product"] == product_name
-            ):
-
+         if (
+    row.get("buyer") == buyer and
+    row.get("seller") == seller and
+    row.get("product") == product_name
+):
                 messages.append({
-                    "sender": row["sender"],
-                    "message": row["message"]
-                })
+    "sender": row.get("sender", ""),
+    "message": row.get("message", "")
+})
 
     return render_template(
         "chat.html",
@@ -486,7 +493,6 @@ def seller_chats():
         "sellerChats.html",
         chats=chats
     )
-
 
 # =========================
 # ADD TO CART
